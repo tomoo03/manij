@@ -1,5 +1,121 @@
 # README
 
+# manij DB設計
+
+## usersテーブル
+|Column|Type|Options|
+|------|----|-------|
+|name|string|null:false|
+|email|string|null: false, unique: true|
+|password|string|null: false|
+### Association
+- has_many :goals
+- has_many :messages
+- has_many :teams
+- has_many :projects, through: :teams
+- has_many :project_tasks
+- has_many :project_comments
+
+## goalsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|string|null: false|
+|phase_title|string||
+### Association
+- belongs_to :user
+- has_many :phases
+- has_many :comments
+- has_many :actions
+
+## phasesテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|string|null: false|
+### Association
+- belongs_to :goal
+- has_many :tasks
+
+## tasksテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|string|null: false|
+### Association
+- belongs_to :phase
+
+## actionsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|text|null: false|
+### Association
+- belongs_to :goal
+
+## commentsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|content|string|null: false|
+### Association
+- belongs_to :goal
+
+## messagesテーブル
+|Column|Type|Options|
+|------|----|-------|
+|content|text|null: false|
+### Association
+- belongs_to :user
+
+## projectsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|string|null: false|
+|phase_title|string||
+### Association
+- has_many :users, through: :groups
+- has_many :teams
+- has_many :project_phases
+- has_many :project_actions
+- has_many :project_comments
+
+## project_phasesテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|string|null: false|
+### Association
+- belongs_to :project
+- has_many :project_tasks
+
+## project_tasksテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|string|null: false|
+### Association
+- belongs_to :user
+- belongs_to :project_phase
+
+## project_actionsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|title|text|null: false|
+### Association
+- belongs_to :project
+
+## project_commentsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|content|string|null: false|
+### Association
+- belongs_to :user
+- belongs_to :project
+
+## teamsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|project|reference|null: false, foreign_key: true|
+|user|reference|null:false, foreign)key: true|
+### Association
+- belongs_to :project
+- belongs_to :user
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
