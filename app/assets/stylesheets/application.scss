@@ -1,3 +1,16 @@
+$overcast: #f1f1f2;
+$white: #fff;
+@mixin wrapper() {
+  width: 100vw;
+  height: 100vh;
+  background-color: $overcast;
+}
+@mixin box-shadow() {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
 @import "reset";
+@import "modules/header";
+@import "modules/static_pages";
+@import "modules/goals";
 @import "font-awesome-sprockets";
 @import "font-awesome";
