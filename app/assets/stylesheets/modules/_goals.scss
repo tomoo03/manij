@@ -1,0 +1,73 @@
+.goal-wrapper {
+  @include wrapper();
+}
+
+.goal-info {
+  width: 80%;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  &__main {
+    width: 75%;
+    height: 100%;
+    margin: 0 auto;
+    padding-top: 80px;
+    overflow: scroll;
+    &__statusbar {
+      width: 95%;
+      height: 60px;
+      margin: 0 auto 50px;
+      padding: 10px;
+      border-radius: 3px;
+      @include box-shadow();
+      background-color: $white;
+    }
+    &__status-label {
+      width: 95%;
+      height: 30px;
+      margin: 0 auto;
+    }
+    &__status {
+      width: 95%;
+      height: 150px;
+      margin: 0 auto 50px;
+      padding: 20px;
+      border-radius: 3px;
+      background-color: $white;
+      @include box-shadow();
+      display: flex;
+      justify-content: space-between;
+      &__left {
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+  }
+  &__sidebar {
+    width: 40%;
+    height: 100%;
+    padding-top: 80px;
+    &__task-list {
+      width: 85%;
+      height: 100%;
+      margin: 0 auto;
+      border-radius: 3px;
+      @include box-shadow();
+      background-color: $white;
+      overflow: scroll;
+      &__label {
+        width: 100%;
+        height: 30px;
+        background-color: #e2e8e4;
+        padding: 10px;
+        box-shadow: 0 1px 3px rgba(160,166,179,0.3);
+      }
+      &__task {
+        width: 100%;
+        height: 60px;
+        margin: 0 auto;
+        padding: 10px;
+      }
+    }
+  }
+}

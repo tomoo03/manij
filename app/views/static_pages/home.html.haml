@@ -1,0 +1,12 @@
+.home-wrapper
+  .home-container
+    .home-container__top-contents
+      %h1 manij
+    .home-container__menu
+      .home-container__menu__signup
+        = link_to 'manijのアカウント作成', new_user_registration_path, class: 'btn-border-bottom'
+      .home-container__menu__login
+        .home-container__menu__login__info
+          %p - or -
+        .home-container__menu__login__link
+          = link_to 'ログイン', new_user_session_path

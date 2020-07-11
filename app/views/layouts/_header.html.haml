@@ -1,0 +1,20 @@
+%header
+  .header-items
+    .header-items__links
+      %ul.header-items__links__lists
+        %li.header-items__links__lists--logo
+          = link_to 'Logo', '#'
+        %li
+          = link_to 'menu', '#'
+        %li
+          = link_to 'menu', '#'
+        %li
+          = link_to 'menu', '#'
+        %li
+          = link_to 'Log out', destroy_user_session_path, method: :delete
+    .header-items__account
+      %ul
+        %li
+          = link_to 'Account', '#'
+        %li
+          = link_to 'Dashboard', '#'

@@ -5,11 +5,12 @@
 ## usersテーブル
 |Column|Type|Options|
 |------|----|-------|
-|name|string|null:false|
+|name|string|null:false, add_index|
 |email|string|null: false, unique: true|
 |password|string|null: false|
 ### Association
 - has_many :goals
+- has_many :tasks
 - has_many :messages
 - has_many :teams
 - has_many :projects, through: :teams
@@ -39,7 +40,9 @@
 |Column|Type|Options|
 |------|----|-------|
 |title|string|null: false|
+|status|string|null: false, default'wip'|
 ### Association
+- belongs_to :user
 - belongs_to :phase
 
 ## actionsテーブル
@@ -87,6 +90,7 @@
 |Column|Type|Options|
 |------|----|-------|
 |title|string|null: false|
+|status|string|null: false, default'wip'|
 ### Association
 - belongs_to :user
 - belongs_to :project_phase
@@ -110,7 +114,7 @@
 |Column|Type|Options|
 |------|----|-------|
 |project|reference|null: false, foreign_key: true|
-|user|reference|null:false, foreign)key: true|
+|user|reference|null:false, foreign_key: true|
 ### Association
 - belongs_to :project
 - belongs_to :user
