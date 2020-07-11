@@ -26,5 +26,46 @@ header {
         }
       }
     }
+    &__account {
+      &__gnav {
+        width: 200px;
+        height: 32px;
+        margin: 0 auto;
+        display: flex;
+        li {
+          position: relative;
+          &:hover > ul > li {
+            height: 32px;
+            overflow: visible;
+          }
+          a {
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            display: block;
+          }
+          li {
+            height: 0;
+            background-color: $white;
+            overflow: hidden;
+            transition: .5s;
+            a {
+              background-color: $white;
+              @include box-shadow();
+            }
+          }
+        }
+        & > li > ul:before {
+          border: 5px solid transparent;
+          border-top: 5px solid #2a2922;
+          content: "";
+          position: absolute;
+          top: 16px;
+          right: -10px;
+          transform: translateY(-40%);
+        }
+      }
+    }
   }
 }

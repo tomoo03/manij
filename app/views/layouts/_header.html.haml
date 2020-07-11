@@ -10,11 +10,17 @@
           = link_to 'menu', '#'
         %li
           = link_to 'menu', '#'
-        %li
-          = link_to 'Log out', destroy_user_session_path, method: :delete
     .header-items__account
-      %ul
+      %ul.header-items__account__gnav
         %li
           = link_to 'Account', '#'
-        %li
-          = link_to 'Dashboard', '#'
+          - if user_signed_in?
+            %ul
+              %li
+                = link_to 'Dashboard', '#'
+              %li
+                = link_to 'Log out', destroy_user_session_path, method: :delete
+          - else
+            %ul
+              %li
+                = link_to 'Log in', new_user_session_path
