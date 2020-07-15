@@ -1,0 +1,9 @@
+.form-wrapper
+  .form-wrapper__container
+    %h2.form-wrapper__container__heading フェーズの編集
+    = form_with model: [@goal,@phase], url: goal_phase_path(@goal,@phase), class: "form-wrapper__container__new-user-form", local: true do |f|
+
+      .form-wrapper__container__new-user-form__field
+        = f.text_field :title, class: "form-wrapper__container__new-user-form__field__input", placeholder: @phase.title, autocomplete: "off"
+      .form-wrapper__container__new-user-form__field__actions
+        = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"

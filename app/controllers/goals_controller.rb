@@ -27,7 +27,7 @@ class GoalsController < ApplicationController
   def show
     @phases = @goal.phases.order("created_at ASC")
     # phase_ids = @phases.pluck(:id)
-    # @tasks = Task.where(phase_id: phase_ids)
+    # @tasks = Task.where(task_flg: true)
   end
 
   def edit

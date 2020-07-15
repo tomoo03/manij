@@ -43,7 +43,7 @@
 ### Association
 - belongs_to :phase
 
-## actionsテーブル
+## mindsテーブル
 |Column|Type|Options|
 |------|----|-------|
 |title|text|null: false|
@@ -93,7 +93,7 @@
 - belongs_to :user
 - belongs_to :project_phase
 
-## project_actionsテーブル
+## project_mindsテーブル
 |Column|Type|Options|
 |------|----|-------|
 |title|text|null: false|

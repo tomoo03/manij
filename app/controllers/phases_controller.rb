@@ -21,6 +21,20 @@ class PhasesController < ApplicationController
     end
   end
 
+  def edit
+    @phase = Phase.find(params[:id])
+    @goal = @phase.goal
+  end
+
+  def update
+    phase = Phase.find(params[:id])
+    if phase.update(phase_params)
+      redirect_to "/goals/#{phase.goal.id}"
+    else
+      render :edit
+    end
+  end
+
   private
     def phase_params
       params.require(:phase).permit(:title).merge(goal_id: params[:goal_id])

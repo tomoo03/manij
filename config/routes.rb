@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   get 'static_pages/about'
   get 'static_pages/help'
   resources :goals do
-    resources :phases, only: [:index, :new, :create]
+    resources :phases, only: [:index, :new, :create, :edit, :update, :destroy]
     resources :minds
   end
-  resources :phases, only: [:show, :edit, :update, :destroy] do
+  resources :phases, only: [:show] do
     resources :tasks
     resources :comments
   end
@@ -16,5 +16,8 @@ Rails.application.routes.draw do
   end
   namespace :api do
     resources :comments, only: :index, defaults: { format: 'json' }
+  end
+  namespace :api do
+    resources :phases, only: :index, defaults: { format: 'json' }
   end
 end

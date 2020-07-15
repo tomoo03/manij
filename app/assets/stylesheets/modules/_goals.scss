@@ -98,6 +98,10 @@
     padding: 0.5rem;
     background-color: $white;
     @include border();
+    &__phase__config p {
+      display: inline-block;
+      cursor: pointer;
+    }
     &__accbox {
       width: 100%;
       margin-top: 1.5rem;

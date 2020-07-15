@@ -14,10 +14,12 @@
               - if goal.phase_title
                 %p 
                   = "進行中のフェーズ #{goal.phase_title}"
-                %p task 3 / 7
+                - goal.phases.each do |phase|
+                  - if goal.phase_title == phase.title
+                    %p
+                      = "タスク終了数 #{sort_tasks(phase.tasks).count} / #{phase.tasks.count}"
               - else
                 %p 進行中のフェーズ なし
-                %p task 3 / 7
           .goal-index-info__main__status__left
             .goal-index-info__main__status__left__link
               = link_to 'Show', goal_path(goal)
