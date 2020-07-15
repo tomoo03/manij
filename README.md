@@ -10,7 +10,6 @@
 |password|string|null: false|
 ### Association
 - has_many :goals
-- has_many :tasks
 - has_many :messages
 - has_many :teams
 - has_many :projects, through: :teams
@@ -40,9 +39,8 @@
 |Column|Type|Options|
 |------|----|-------|
 |title|string|null: false|
-|status|string|null: false, default'wip'|
+|task_flg|boolean|null: false, default'false'|
 ### Association
-- belongs_to :user
 - belongs_to :phase
 
 ## actionsテーブル

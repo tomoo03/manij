@@ -1,0 +1,10 @@
+.form-wrapper
+  .form-wrapper__container
+    %h2.form-wrapper__container__heading タスクの新規作成
+    = form_with model: [@phase, @task], url: phase_tasks_path(@phase), class: "form-wrapper__container__new-user-form", local: true do |f|
+
+      .form-wrapper__container__new-user-form__field
+        = f.text_field :title, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'タスクの内容', autocomplete: "off"
+        = f.hidden_field :task_flg, value: false
+      .form-wrapper__container__new-user-form__field__actions
+        = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"

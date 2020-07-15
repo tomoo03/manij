@@ -3,9 +3,9 @@
     .header-items__links
       %ul.header-items__links__lists
         %li.header-items__links__lists--logo
-          = link_to 'Logo', '#'
+          = link_to 'Logo', root_path
         %li
-          = link_to 'menu', '#'
+          = link_to 'マイページ', goals_path
         %li
           = link_to 'menu', '#'
         %li
@@ -18,6 +18,8 @@
             %ul
               %li
                 = link_to 'Dashboard', '#'
+              %li
+                = link_to '目標の新規作成', new_goal_path
               %li
                 = link_to 'Log out', destroy_user_session_path, method: :delete
           - else

@@ -3,5 +3,18 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
   get 'static_pages/about'
   get 'static_pages/help'
-  resources :goals
+  resources :goals do
+    resources :phases, only: [:index, :new, :create]
+    resources :minds
+  end
+  resources :phases, only: [:show, :edit, :update, :destroy] do
+    resources :tasks
+    resources :comments
+  end
+  namespace :api do
+    resources :tasks, only: :index, defaults: { format: 'json' }
+  end
+  namespace :api do
+    resources :comments, only: :index, defaults: { format: 'json' }
+  end
 end
