@@ -14,24 +14,4 @@ $(function() {
       alert('error');
     });
   });
-
-  $('.comment_button').on('click',function() {
-    let textBox = $(this).parent()
-    let phaseId = textBox.find("p").data("phase-id");
-    let commentText = textBox.find("input").val();
-    console.log(phaseId);
-    console.log(commentText);
-    $.ajax({
-      url: '/api/comments',
-      type: 'GET',
-      dataType: 'json',
-      data: {content: commentText, phase_id: phaseId}
-    })
-    .done(function(comment) {
-      textBox.find("input").val("");
-    })
-    .fail(function(){
-      alert('error');
-    });
-  });
 });

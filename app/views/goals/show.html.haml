@@ -19,12 +19,13 @@
           .goal-show-info__contents__phase
             %p{data: {phase: {id: phase.id}}}
               = phase.title
+            .token{data: {authenticity: {token: form_authenticity_token}}}
             %input{:type => "text", :placeholder => "コメント"}
-              %button.comment_button 送信
+            %button.comment_button 送信
             .goal-show-info__contents__phase__menu
-              - unless phase.comments.empty?
-                - sort_created_at(phase.comments).each do |comment|
-                  .goal-show-info__contents__phase__comments
+              .goal-show-info__contents__phase__comments
+                - unless phase.comments.empty?
+                  - sort_created_at(phase.comments).each do |comment|
                     %p 
                       = comment.content
               = link_to 'タスクを作成', new_phase_task_path(phase)
