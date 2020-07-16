@@ -35,6 +35,11 @@ class PhasesController < ApplicationController
     end
   end
 
+  def destroy
+    phase = Phase.find(params[:id])
+    phase.destroy
+  end
+
   private
     def phase_params
       params.require(:phase).permit(:title).merge(goal_id: params[:goal_id])

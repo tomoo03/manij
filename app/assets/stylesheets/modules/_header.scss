@@ -1,72 +1,54 @@
 header {
   width: 100%;
-  height: 48px;
-  box-shadow: 0 1px 3px rgba(160,166,179,0.3);
+  height: 3rem;
+  box-shadow: 0 0.1rem 0.2rem rgba(160,166,179,0.3);
   background-color: $white;
   position: fixed;
   top: 0;
   .header-items {
-    width: 100%;
+    width: 90%;
     height: 100%;
-    padding: 0 40px;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     &__links {
-      width: 50%;
-      display: flex;
-      &__lists {
-        display: flex;
-        align-items: center;
-        li {
-          margin-right: 20px;
-        }
-        &--logo {
-          font-size: 30px;
-        }
+      display: inline-block;
+      &--logo {
+        font-size: 2rem;
+        display: inline-block;
       }
-    }
-    &__account {
-      &__gnav {
-        width: 200px;
-        height: 32px;
-        margin: 0 auto;
-        display: flex;
-        li {
-          position: relative;
-          &:hover > ul > li {
-            height: 32px;
-            overflow: visible;
-          }
-          a {
-            width: 100%;
-            height: 32px;
-            line-height: 32px;
-            text-align: center;
-            display: block;
-          }
-          li {
-            height: 0;
-            background-color: $white;
-            overflow: hidden;
-            transition: .5s;
-            a {
-              border-bottom: 1px solid #92aac7;
-              background-color: $white;
-              @include box-shadow();
-            }
-          }
-        }
-        & > li > ul:before {
-          border: 5px solid transparent;
-          border-top: 5px solid #2a2922;
-          content: "";
-          position: absolute;
-          top: 16px;
-          right: 8px;
-          transform: translateY(-40%);
-        }
+      &--box {
+        height: 100%;
+      }
+      &__menu {
+        margin-bottom: 0.3rem;
+        text-align: center;
+        line-height: 1rem;
+        // background: lightpink;
       }
     }
   }
+}
+
+#header__btn {
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  // background: lightgreen;
+  &:hover {
+    background: #ddd;
+  }
+}
+
+#header__panel {
+  width: 100%;
+  padding-bottom: 0.3rem;
+  @include border();
+  border-top: none;
+  background: $white;
+  display: none;
 }

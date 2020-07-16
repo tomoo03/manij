@@ -120,11 +120,20 @@
         display: block;
         opacity: 1;
       }
-      &__accshow__checkbox label {
-        cursor: default;
-      }
-      &__accshow__checkbox input {
-        display: inline-block;
+      &__accshow__checkbox {
+        display: flex;
+        label {
+          cursor: default;
+        }
+        input {
+          display: inline-block;
+        }
+        p {
+          padding-top: 0.3rem;
+          margin-left: 1rem;
+          font-size: 0.7rem;
+          cursor: default;
+        }
       }
     }
     &__accbox &__accbox__accshow {

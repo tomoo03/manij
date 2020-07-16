@@ -11,7 +11,6 @@
         - else
           %p アクションを追加して下さい
       .goal-show-info__header__test-link
-        = link_to 'フェーズを追加する', new_goal_phase_path(@goal)
         = link_to 'アクションを追加する', new_goal_mind_path(@goal)
     - unless @phases.empty?
       - @phases.each do |phase|
@@ -19,8 +18,10 @@
           .goal-show-info__contents__phase
             .goal-show-info__contents__phase__config
               - unless phase.title == @goal.phase_title
-                %p#phase_data{data: {phase: {id: phase.id}}} 現在のフェーズに変更
-            %p{data: {phase: {id: phase.id}}}
+                %p 現在のフェーズに変更
+              - else
+                %p 進行中のフェーズ
+            %p#phase_data{data: {phase: {id: phase.id}}}
               = phase.title
               = link_to 'フェーズを編集する', edit_goal_phase_path(@goal,phase)
             .token{data: {authenticity: {token: form_authenticity_token}}}
@@ -48,6 +49,9 @@
                               %input.goal-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
                             = task.title
                             #task{data: {task: {id: task.id}}}
+                          %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
+                            - unless task.task_flg == false
+                              = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日"
               - else
                 %p タスクを作成して下さい
     - else

@@ -17,6 +17,16 @@ class MindsController < ApplicationController
     end
   end
 
+  def update
+    mind = Mind.find(params[:id])
+    mind.update_attributes(mind_params)
+  end
+
+  def destroy
+    mind = Mind.find
+    mind.destroy
+  end
+
   private
     def mind_params
       params.require(:mind).permit(:title).merge(goal_id: params[:goal_id])

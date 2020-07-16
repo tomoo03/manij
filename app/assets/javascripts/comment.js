@@ -8,7 +8,7 @@ $(function() {
   $('.comment_button').on('click',function() {
     let parent = $(this).parent()
     let token = parent.find(".token").data("authenticity-token");
-    let phaseId = parent.find("p").data("phase-id");
+    let phaseId = parent.find("#phase_data").data("phase-id");
     let commentText = parent.find("input").val();
     $.ajax({
       url: `/phases/${phaseId}/comments`,

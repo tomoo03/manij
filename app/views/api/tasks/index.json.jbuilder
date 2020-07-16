@@ -1,4 +1,4 @@
-json.id @task.id
-json.title @task.title
-json.task_flg @task.task_flg
-json.phase_id @task.phase_id
+json.year @task.updated_at.year
+json.mon @task.updated_at.mon
+json.day @task.updated_at.day
+json.boolean @task.task_flg
