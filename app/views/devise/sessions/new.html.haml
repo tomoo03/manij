@@ -5,20 +5,12 @@
       = devise_error_messages!
 
       .form-wrapper__container__new-user-form__field
-        = f.text_field :name, class: "form-wrapper__container__new-user-form__field__input", autofocus: true, placeholder: 'Name', autocomplete: "name" 
-      .form-wrapper__container__new-user-form__field
         = f.email_field :email, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'Eメール', autocomplete: "email"
       .form-wrapper__container__new-user-form__field
         - if @validatable
           %em = "パスワードは#{@minimum_password_length}文字以上入力して下さい"
           %br/
         = f.password_field :password, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'パスワード(8文字~32文字)', autocomplete: "new-password"
-      .form-wrapper__container__new-user-form__field
-        = f.password_field :password_confirmation, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'パスワード(確認)', autocomplete: "new-password"
-      - if devise_mapping.rememberable?
-        .form-wrapper__container__new-user-form__field
-          = f.check_box :remember_me, class: "form-wrapper__container__new-user-form__field__checkbox"
-          = f.label :ログイン状態を保存する, class: "form-wrapper__container__new-user-form__field__label"
       .form-wrapper__container__new-user-form__field__actions
         = f.submit "Log in", class: "form-wrapper__container__new-user-form__field__actions--button"
     -# = render "devise/shared/links"

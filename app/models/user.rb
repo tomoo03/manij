@@ -4,7 +4,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[facebook twitter google_oauth2],
          password_length: 8..32
   validates :name, presence: true, uniqueness: true
-  has_many :goals
+  has_many :goals, dependent: :destroy
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

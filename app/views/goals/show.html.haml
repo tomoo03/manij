@@ -1,2 +1,60 @@
-%h1 Goals#show
-%p Find me in app/views/goals/show.html.haml
+.goal-wrapper
+  .goal-show-info
+    .goal-show-info__header
+      %h2.goal-show-info__header__title
+        = @goal.title
+      .goal-show-info__header__action
+        - unless @goal.minds.empty?
+          - @goal.minds.each do |mind|
+            %p 
+              = mind.title
+        - else
+          %p アクションを追加して下さい
+      .goal-show-info__header__test-link
+        = link_to 'アクションを追加する', new_goal_mind_path(@goal)
+    - unless @phases.empty?
+      - @phases.each do |phase|
+        .goal-show-info__contents
+          .goal-show-info__contents__phase
+            .goal-show-info__contents__phase__config
+              - unless phase.title == @goal.phase_title
+                %p 現在のフェーズに変更
+              - else
+                %p 進行中のフェーズ
+            %p#phase_data{data: {phase: {id: phase.id}}}
+              = phase.title
+              = link_to 'フェーズを編集する', edit_goal_phase_path(@goal,phase)
+            .token{data: {authenticity: {token: form_authenticity_token}}}
+            %input{:type => "text", :placeholder => "コメント"}
+            %button.comment_button 送信
+            .goal-show-info__contents__phase__menu
+              .goal-show-info__contents__phase__comments
+                - unless phase.comments.empty?
+                  - sort_created_at(phase.comments).each do |comment|
+                    %p 
+                      = comment.content
+              = link_to 'タスクを作成', new_phase_task_path(phase)
+              - unless phase.tasks.empty?
+                .goal-show-info__contents__accbox
+                  %label
+                    タスクを表示
+                    %input.goal-show-info__contents__accbox__cssacc{:type => "checkbox"}
+                    .goal-show-info__contents__accbox__accshow
+                      - sort_created_at(phase.tasks).each do |task|
+                        .goal-show-info__contents__accbox__accshow__checkbox
+                          %label.goal-show-info__contents__accbox__accshow__checkbox__label
+                            - if task.task_flg == true
+                              %input.goal-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox", :checked => "checked"}
+                            - else
+                              %input.goal-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
+                            = task.title
+                            #task{data: {task: {id: task.id}}}
+                          %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
+                            - unless task.task_flg == false
+                              = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日"
+              - else
+                %p タスクを作成して下さい
+    - else
+      .goal-show-info__contents
+        %p.empty empty
+        %p.empty フェーズを追加して下さい

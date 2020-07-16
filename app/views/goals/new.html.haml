@@ -1,2 +1,9 @@
-%h1 Goals#new
-%p Find me in app/views/goals/new.html.haml
+.form-wrapper
+  .form-wrapper__container
+    %h2.form-wrapper__container__heading 目標の新規作成
+    = form_with model: @goal, class: "form-wrapper__container__new-user-form", local: true do |f|
+
+      .form-wrapper__container__new-user-form__field
+        = f.text_field :title, class: "form-wrapper__container__new-user-form__field__input", placeholder: '目標のタイトル', autocomplete: "off"
+      .form-wrapper__container__new-user-form__field__actions
+        = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"

@@ -1,13 +1,18 @@
 class GoalsController < ApplicationController
+  include ApplicationHelper
   before_action :set_goal, only: [:edit, :show]
   before_action :move_to_sign_in
 
   def new
-    @goal = Goal.new
   end
 
   def create
-    Goal.create(goal_params)
+    goal = Goal.new(goal_params)
+    if goal.save
+      redirect_to goals_path
+    else
+      render :new
+    end
   end
 
   def destroy
@@ -16,10 +21,13 @@ class GoalsController < ApplicationController
   end
 
   def index
-    @goals = current_user.goals
+    @goals = current_user.goals.order("created_at DESC")
   end
 
   def show
+    @phases = @goal.phases.order("created_at ASC")
+    # phase_ids = @phases.pluck(:id)
+    # @tasks = Task.where(task_flg: true)
   end
 
   def edit
@@ -38,9 +46,5 @@ class GoalsController < ApplicationController
 
     def set_goal
       @goal = Goal.find(params[:id])
-    end
-
-    def move_to_sign_in
-      redirect_to root_path unless user_signed_in?
     end
 end

@@ -1,26 +1,36 @@
 %header
   .header-items
+    .header-items__links--logo
+      = link_to 'Home', root_path
     .header-items__links
-      %ul.header-items__links__lists
-        %li.header-items__links__lists--logo
-          = link_to 'Logo', '#'
-        %li
-          = link_to 'menu', '#'
-        %li
-          = link_to 'menu', '#'
-        %li
-          = link_to 'menu', '#'
-    .header-items__account
-      %ul.header-items__account__gnav
-        %li
-          = link_to 'Account', '#'
-          - if user_signed_in?
-            %ul
-              %li
-                = link_to 'Dashboard', '#'
-              %li
-                = link_to 'Log out', destroy_user_session_path, method: :delete
-          - else
-            %ul
-              %li
-                = link_to 'Log in', new_user_session_path
+      - if user_signed_in?
+        = link_to 'マイページ', goals_path
+      - else
+        = link_to 'ログイン', new_user_session_path
+    .header-items__links--box
+      %button#header__btn Create
+      #header__panel
+        .header-items__links__menu
+          = link_to '新規作成', '#'
+        .header-items__links__menu
+          = link_to '編集', '#'
+        .header-items__links__menu
+          = link_to '削除', '#'
+    .header-items__links
+      = link_to 'Account', '#'
+    -# .header-items__account
+    -#   %ul.header-items__account__gnav
+    -#     %li
+    -#       = link_to 'Account', '#'
+    -#       - if user_signed_in?
+    -#         %ul
+    -#           %li
+    -#             = link_to 'Dashboard', '#'
+    -#           %li
+    -#             = link_to '目標の新規作成', new_goal_path
+    -#           %li
+    -#             = link_to 'Log out', destroy_user_session_path, method: :delete
+    -#       - else
+    -#         %ul
+    -#           %li
+    -#             = link_to 'Log in', new_user_session_path
