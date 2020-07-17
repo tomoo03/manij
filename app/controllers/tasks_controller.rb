@@ -7,13 +7,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    phase = Phase.find(params[:phase_id])
-    task = Task.new(task_params)
+    @phase = Phase.find(params[:phase_id])
+    @task = Task.new(task_params)
     if task.save
       redirect_to user_goal_path(current_user, task.phase.goal)
     else
-      @phase = Phase.find(params[:phase_id])
-      @task = Task.new
       render :new
     end
   end

@@ -1,0 +1,11 @@
+.form-wrapper
+  .form-wrapper__container
+    %h2.form-wrapper__container__heading タスクの新規作成
+    = form_with model: [@project_phase, @project_task], class: "form-wrapper__container__new-user-form", local: true do |f|
+
+      .form-wrapper__container__new-user-form__field
+        = f.text_field :title, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'フェーズのタイトル', autocomplete: "off"
+        = f.hidden_field :task_flg, value: false
+        -# = f.hidden_field :user_id, value: current_user.id
+      .form-wrapper__container__new-user-form__field__actions
+        = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"

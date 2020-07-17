@@ -6,6 +6,11 @@
           = "立てた目標：#{@goals.count}" 
       .goal-index-info__main__status-label
         %p 目標
+        - current_user.teams.each do |team|
+          %p
+            = team.name
+          %p
+            = link_to "チーム一覧へ", teams_path
       - @goals.each do |goal|
         .goal-index-info__main__status
           .goal-index-info__main__status__right

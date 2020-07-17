@@ -11,11 +11,12 @@
       %button#header__btn Create
       #header__panel
         .header-items__links__menu
-          = link_to '新規作成', new_user_goal_path(current_user)
+          -if user_signed_in?
+            = link_to '新規作成', new_user_goal_path(current_user)
         .header-items__links__menu
-          = link_to '編集', '#'
+          = link_to 'チーム新規作成', new_team_path
         .header-items__links__menu
-          = link_to '削除', '#'
+          = link_to 'ログアウト', destroy_user_session_path, method: :delete
     .header-items__links
       = link_to 'Account', '#'
     -# .header-items__account

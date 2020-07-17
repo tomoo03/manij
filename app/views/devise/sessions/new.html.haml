@@ -1,6 +1,7 @@
 .form-wrapper
   .form-wrapper__container
     %h2.form-wrapper__container__heading Log in
+    = link_to '新規登録', new_user_registration_path
     = form_with model: @user, url: user_session_path, class: "form-wrapper__container__new-user-form", local: true do |f|
       = devise_error_messages!
 

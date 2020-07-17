@@ -1,0 +1,61 @@
+.goal-wrapper
+  .goal-show-info
+    .goal-show-info__header
+      %h2.goal-show-info__header__title
+        = @project.title
+      .goal-show-info__header__action
+      -#   - unless @goal.minds.empty?
+      -#     - @goal.minds.each do |mind|
+      -#       %p 
+      -#         = mind.title
+      -#   - else
+      -#     %p アクションを追加して下さい
+      .goal-show-info__header__test-link
+        -# = link_to 'アクションを追加する', new_goal_mind_path(@goal)
+        = link_to 'フェーズを追加', new_project_project_phase_path(@project)
+    - unless @project_phases.empty?
+      - @project_phases.each do |project_phase|
+        .goal-show-info__contents
+          .goal-show-info__contents__phase
+            .goal-show-info__contents__phase__config
+              - unless project_phase.title == @project.phase_title
+                %p 現在のフェーズに変更
+              - else
+                %p 進行中のフェーズ
+            %p#project_phase_data{data: {project_phase: {id: project_phase.id}}}
+              = project_phase.title
+              = link_to 'フェーズを編集する', edit_project_project_phase_path(@project,project_phase)
+            -# .token{data: {authenticity: {token: form_authenticity_token}}}
+            -# %input{:type => "text", :placeholder => "コメント"}
+            -# %button.comment_button 送信
+            .goal-show-info__contents__phase__menu
+              -# .goal-show-info__contents__phase__comments
+              -#   - unless phase.comments.empty?
+              -#     - sort_created_at(phase.comments).each do |comment|
+              -#       %p 
+              -#         = comment.content
+              = link_to 'タスクを作成', new_project_phase_project_task_path(project_phase)
+              - unless project_phase.project_tasks.empty?
+                .goal-show-info__contents__accbox
+                  %label
+                    タスクを表示
+                    %input.goal-show-info__contents__accbox__cssacc{:type => "checkbox"}
+                    .goal-show-info__contents__accbox__accshow
+                      - sort_created_at(project_phase.project_tasks).each do |project_task|
+                        .goal-show-info__contents__accbox__accshow__checkbox
+                          %label.goal-show-info__contents__accbox__accshow__checkbox__label
+                            - if project_task.task_flg == true
+                              %input.goal-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox", :checked => "checked"}
+                            - else
+                              %input.goal-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
+                            = project_task.title
+                            #project_task{data: {project_task: {id: project_task.id}}}
+                          %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
+                            - unless project_task.task_flg == false
+                              = "#{project_task.updated_at.year}年#{project_task.updated_at.mon}月#{project_task.updated_at.day}日"
+              - else
+                %p タスクを作成して下さい
+    - else
+      .goal-show-info__contents
+        %p.empty empty
+        %p.empty フェーズを追加して下さい

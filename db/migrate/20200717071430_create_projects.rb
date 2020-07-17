@@ -1,6 +1,6 @@
-class CreateGoals < ActiveRecord::Migration[6.0]
+class CreateProjects < ActiveRecord::Migration[6.0]
   def change
-    create_table :goals do |t|
+    create_table :projects do |t|
       t.string :title, null: false
       t.string :phase_title
       t.timestamps
