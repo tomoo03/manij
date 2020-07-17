@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
   get 'static_pages/about'
   get 'static_pages/help'
-  resources :goals do
-    resources :phases, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :users do
+    resources :goals, only: [:new, :create, :show, :edit, :update, :destroy]
+  end
+  resources :goals, only: [:index] do
+    resources :phases, only: [:index, :new, :create, :edit, :update]
     resources :minds
   end
   resources :phases, only: [:show] do

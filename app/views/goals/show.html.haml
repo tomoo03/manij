@@ -12,6 +12,7 @@
           %p アクションを追加して下さい
       .goal-show-info__header__test-link
         = link_to 'アクションを追加する', new_goal_mind_path(@goal)
+        = link_to 'フェーズを追加', new_goal_phase_path(@goal)
     - unless @phases.empty?
       - @phases.each do |phase|
         .goal-show-info__contents

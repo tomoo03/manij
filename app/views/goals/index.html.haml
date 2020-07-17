@@ -22,7 +22,7 @@
                 %p 進行中のフェーズ なし
           .goal-index-info__main__status__left
             .goal-index-info__main__status__left__link
-              = link_to 'Show', goal_path(goal)
+              = link_to 'Show', user_goal_path(current_user, goal)
     .goal-index-info__sidebar
       .goal-index-info__sidebar__task-list
         .goal-index-info__sidebar__task-list__label

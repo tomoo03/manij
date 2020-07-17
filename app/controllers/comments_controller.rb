@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-
+  before_action :move_to_sign_in
+  
   def create
     @comment = Comment.new(comments_params)
     if @comment.save

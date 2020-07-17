@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
     def move_to_sign_in
       redirect_to root_path unless user_signed_in?
     end
+
+    def set_current_user_goal
+      @goal = current_user.goals.find(params[:goal_id])
+    end
 end

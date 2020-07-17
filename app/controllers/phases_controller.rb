@@ -1,8 +1,8 @@
 class PhasesController < ApplicationController
   before_action :move_to_sign_in
+  before_action :set_current_user_goal, only: [:new]
 
   def new
-    @goal = Goal.find(params[:goal_id])
     @phase = Phase.new
   end
 
@@ -13,7 +13,7 @@ class PhasesController < ApplicationController
         goal = Goal.find(params[:goal_id])
         goal.update_attributes(title: goal.title, phase_title: phase.title)
       end
-      redirect_to "/goals/#{phase.goal.id}"
+      redirect_to user_goal_path(current_user, phase.goal)
     else
       @goal = Goal.find(params[:goal_id])
       @phase = Phase.new

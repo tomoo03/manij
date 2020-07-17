@@ -1,9 +1,10 @@
 class GoalsController < ApplicationController
   include ApplicationHelper
-  before_action :set_goal, only: [:edit, :show]
+  before_action :set_goal, except: [:index, :new, :create]
   before_action :move_to_sign_in
 
   def new
+    @goal = Goal.new
   end
 
   def create
@@ -16,8 +17,7 @@ class GoalsController < ApplicationController
   end
 
   def destroy
-    goal = Goal.find(params[:id])
-    goal.destroy
+    @goal.destroy
   end
 
   def index
@@ -34,7 +34,6 @@ class GoalsController < ApplicationController
   end
 
   def update
-    goal = Goal.find(params[:id])
     goal.update(goal_params)
   end
 
@@ -45,6 +44,6 @@ class GoalsController < ApplicationController
     end
 
     def set_goal
-      @goal = Goal.find(params[:id])
+      @goal = current_user.goals.find(params[:id])
     end
 end

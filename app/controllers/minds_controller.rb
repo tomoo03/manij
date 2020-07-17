@@ -1,15 +1,15 @@
 class MindsController < ApplicationController
   before_action :move_to_sign_in
+  before_action :set_current_user_goal, only: [:new]
 
   def new
-    @goal = Goal.find(params[:goal_id])
     @mind = Mind.new
   end
 
   def create
     mind = Mind.new(mind_params)
     if mind.save
-      redirect_to "/goals/#{params[:goal_id]}"
+      redirect_to user_goal_path(current_user, mind.goal)
     else
       @goal = Goal.find(params[:goal_id])
       @mind = Mind.new
