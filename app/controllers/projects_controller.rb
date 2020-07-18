@@ -17,7 +17,8 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @project_phases = @project.project_phases.order("created_at ASC")
+    @project_phase = ProjectPhase.find_by(title: @project.phase_title)
+    @project_phases = @project.project_phases.where.not(title: @project.phase_title).order("created_at ASC")
   end
 
   def edit

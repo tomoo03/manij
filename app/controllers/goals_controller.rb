@@ -2,6 +2,7 @@ class GoalsController < ApplicationController
   include ApplicationHelper
   before_action :set_goal, except: [:index, :new, :create]
   before_action :move_to_sign_in
+  before_action :check_user, only: [:show, :edit, :update, :destroy]
 
   def new
     @goal = Goal.new
@@ -25,7 +26,8 @@ class GoalsController < ApplicationController
   end
 
   def show
-    @phases = @goal.phases.order("created_at ASC")
+    @phase = Phase.find_by(title: @goal.phase_title)
+    @phases = @goal.phases.where.not(title: @goal.phase_title).order("created_at ASC")
     # phase_ids = @phases.pluck(:id)
     # @tasks = Task.where(task_flg: true)
   end

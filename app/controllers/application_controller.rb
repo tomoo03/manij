@@ -18,4 +18,11 @@ class ApplicationController < ActionController::Base
     def set_current_user_goal
       @goal = current_user.goals.find(params[:goal_id])
     end
+
+    def check_user
+      goal = Goal.find(params[:user_id])
+      unless goal.id == current_user.id
+        redirect_to new_user_session_path
+      end
+    end
 end

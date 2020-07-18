@@ -27,8 +27,8 @@ class PhasesController < ApplicationController
 
   def update
     @phase = Phase.find(params[:id])
-    if phase.update(phase_params)
-      redirect_to "/goals/#{phase.goal.id}"
+    if @phase.update(phase_params)
+      redirect_to user_goal_path(@phase.goal.user, @phase.goal)
     else
       @goal = @phase.goal
       render :edit

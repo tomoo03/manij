@@ -1,20 +1,24 @@
 $(function() {
   function buildHTML(message) {
     let html = 
-      `<p>${message.content}</p>`
+      `<div style="width:100%;padding:0.2rem 0;display:flex;justify-content:space-between;"><p>${message.content}</p>
+       <a rel="nofollow" data-method="delete" href="/phases/${message.phase_id}/comments/${message.comment_id}"><i class="fa fa-trash"></i>
+       </a></div>`
     return html;
   }
 
   function buildProjectHTML(message) {
     let html = 
-      `<p>${message.content} ${message.name}</p>`
+    `<div style="width:100%;padding:0.2rem 0;display:flex;justify-content:space-between;"><p><i class="fa fa-user-edit"></i>${message.name}<br>${message.content}</p>
+    <a rel="nofollow" data-method="delete" href="/project_phases/${message.phase_id}/project_comments/${message.comment_id}"><i class="fa fa-trash"></i>
+    </a></div>`
     return html;
   }
 
   $('.comment_button').on('click',function() {
     let parent = $(this).parent()
     let token = parent.find(".token").data("authenticity-token");
-    let phaseId = parent.parent().prev().find("#phase_data").data("phase-id");
+    let phaseId = parent.data("commentphase-id");
     let commentText = parent.find("input").val();
     $.ajax({
       url: `/phases/${phaseId}/comments`,
@@ -35,7 +39,7 @@ $(function() {
   $('.project_comment_button').on('click',function() {
     let parent = $(this).parent()
     let token = parent.find(".token").data("authenticity-token");
-    let phaseId = parent.find("#project_phase_data").data("projectphase-id");
+    let phaseId = parent.data("commentphase-id");
     let commentText = parent.find("input").val();
     $.ajax({
       url: `/project_phases/${phaseId}/project_comments`,
@@ -45,7 +49,7 @@ $(function() {
     })
     .done(function(comment) {
       let html = buildProjectHTML(comment);
-      parent.next().append(html);
+      parent.prev().append(html);
       parent.find("input").val("");
     })
     .fail(function(){

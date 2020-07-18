@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :phases, only: :index, defaults: { format: 'json' }
+    resources :phases, only: [:index, :edit], defaults: { format: 'json' }
   end
 
   resources :teams do

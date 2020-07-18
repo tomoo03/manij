@@ -5,67 +5,197 @@
         = @project.title
       .goal-show-info__header__action
         - unless @project.project_minds.empty?
-          - @project.project_minds.each do |project_mind|
+          - @project.project_minds.each do |mind|
             %p 
-              = project_mind.title
+              = mind.title
         - else
           %p アクションを追加して下さい
       .goal-show-info__header__test-link
         = link_to 'アクションを追加する', new_project_project_mind_path(@project)
-        = link_to 'フェーズを追加', new_project_project_phase_path(@project)
-    - unless @project_phases.empty?
-      - @project_phases.each do |project_phase|
-        .goal-show-info__contents
-          .project-show-info__contents__phase-title
-            %p
-              = project_phase.title
-          .project-show-info__contents__top
-            .goal-show-info__contents__phase
-              .project-show-info__contents__phase__config
-                - unless project_phase.title == @project.phase_title
-                  %p 現在のフェーズに変更
-                - else
-                  %p 進行中のフェーズ
-              %p#project_phase_data{data: {projectphase: {id: project_phase.id}}}
-                = link_to 'フェーズを編集する', edit_project_project_phase_path(@project,project_phase)
-            .project-show-info__contents__top__comments
-              .goal-show-info__contents__phase__comments
-                - unless project_phase.project_comments.empty?
-                  - sort_created_at(project_phase.project_comments).each do |project_comment|
-                    %p 
-                      = "#{project_comment.content} #{project_comment.user.name}"
-              .project-show-info__contents__comments
-                .token{data: {authenticity: {token: form_authenticity_token}}}
-                %input{:type => "text", :placeholder => "コメント"}
-                %button.project_comment_button 送信
-          .project-show-info__contents__phase__config
-            .project-show-info__contents__phase__tasks
-              = link_to 'タスクを作成', new_project_phase_project_task_path(project_phase)
-              - unless project_phase.project_tasks.empty?
-                .goal-show-info__contents__accbox
-                  %label
-                    タスクを表示
-                    %input.goal-show-info__contents__accbox__cssacc{:type => "checkbox"}
-                    .goal-show-info__contents__accbox__accshow
-                      - sort_created_at(project_phase.project_tasks).each do |project_task|
-                        .goal-show-info__contents__accbox__accshow__checkbox
-                          %label.goal-show-info__contents__accbox__accshow__checkbox__label
-                            - if project_task.task_flg == true
-                              - unless project_task.user.id == current_user.id
-                                %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox", :checked => "checked"}
-                            - else
-                              - unless project_task.user.id == current_user.id
-                                %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
-                            = project_task.title
-                            #project_task{data: {projecttask: {id: project_task.id}}}
-                          %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
-                            - unless project_task.task_flg == false
-                              = "#{project_task.updated_at.year}年#{project_task.updated_at.mon}月#{project_task.updated_at.day}日"
-                              = "担当: #{project_task.user.name}"
-
-              - else
-                %p タスクを作成して下さい
+    - unless @project_phase.nil?
+      .goal-show-info__contents
+        .goal-show-info__contents__phase-header
+          .goal-show-info__contents__phase-header__title
+            .goal-show-info__contents__phase-header__title__nav
+              %p 
+                %span 
+                  = icon('fa', 'check-circle')
+                進行中のフェーズ
+              .goal-show-info__contents__phase-header__title__nav__link
+                = link_to edit_project_project_phase_path(@project,@project_phase) do
+                  = icon('fa', 'edit')
+                = link_to project_project_phase_path(@project,@project_phase), method: :delete do
+                  = icon('fa', 'trash')
+            %p.goal-show-info__contents__phase-header__title__phase
+              = @project_phase.title
+        .goal-show-info__contents__top
+          .goal-show-info__contents__top__phase
+            %p#phase_data{data: {phase: {id: @project_phase.id}}}
+          .goal-show-info__contents__top__tasks
+            .goal-show-info__contents__top__tasks__title
+              %p タスクのチェック
+            - unless @project_phase.project_tasks.empty?
+              - sort_created_at(@project_phase.project_tasks).each do |task|
+                .goal-show-info__contents__top__tasks__index
+                  .goal-show-info__contents__top__tasks__index__timestamp
+                    %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
+                      - unless task.task_flg == false
+                        = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日 担当: #{task.user.name}"
+                  .goal-show-info__contents__top__tasks__index__checkbox
+                    .goal-show-info__contents__top__tasks__index__checkbox__main
+                      %label.goal-show-info__contents__accbox__accshow__checkbox__label
+                        - if task.user_id == current_user.id
+                          - if task.task_flg == true
+                            %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox", :checked => "checked"}
+                          - else
+                            %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
+                          = task.title
+                          #task{data: {task: {id: task.id}}}
+                        - else
+                          - if task.task_flg == true
+                            %span
+                              = icon('fa', 'check-square')
+                          - else                            
+                          = task.title
+                          #task{data: {task: {id: task.id}}}
+                    .goal-show-info__contents__top__tasks__index__checkbox__link
+                      = link_to edit_project_phase_project_task_path(@project_phase, task) do
+                        = icon('fa', 'edit')
+                      = link_to new_project_phase_project_task_path(@project_phase), method: :delete do
+                        = icon('fa', 'trash')
+            - else
+              %p タスクはありません          
+            .goal-show-info__contents__top__tasks__create
+              = link_to new_project_phase_project_task_path(@project_phase) do
+                = icon('fa', 'tasks')
+                タスクの作成
+        .goal-show-info__contents__bottom
+          .goal-show-info__contents__bottom__accbox
+            %label.goal-show-info__contents__bottom__accbox__label
+              %span
+                = icon('fa', 'comment')
+              コメントメニュー
+              = icon('fa', 'angle-down')
+              %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
+              .goal-show-info__contents__bottom__accbox__accshow
+                .goal-show-info__contents__bottom__comments
+                  - unless @project_phase.project_comments.empty?
+                    - sort_created_at(@project_phase.project_comments).each do |comment|
+                      .goal-show-info__contents__bottom__comments__content
+                        .goal-show-info__contents__bottom__comments__content__comment
+                          %p
+                            = icon('fa', 'user-edit')
+                            = comment.user.name
+                            %br
+                            = comment.content
+                          = link_to project_phase_project_comment_path(@project_phase,comment), method: :delete do
+                            = icon('fa', 'trash')
+                  .goal-show-info__contents__bottom__comments__form{data: {commentphase: {id: @project_phase.id}}}
+                    .token{data: {authenticity: {token: form_authenticity_token}}}
+                    %input{:type => "text", :placeholder => "コメント"}
+                    %button.project_comment_button
+                      = icon('fa', 'paper-plane')
+      .goal-show-info__create
+        = link_to new_project_project_phase_path(@project) do
+          = icon('fa', 'plus-circle')
+          フェーズを追加
     - else
       .goal-show-info__contents
         %p.empty empty
-        %p.empty フェーズを追加して下さい
+        = link_to new_project_project_phase_path(@project) do
+          = icon('fa', 'plus')
+          フェーズを追加    
+    - unless @project_phases.empty?
+      - @project_phases.each do |phase|
+        .goal-show-info__contents
+          .goal-show-info__contents__phase-header
+            .goal-show-info__contents__phase-header__title
+              .goal-show-info__contents__phase-header__title__nav
+                %p 
+                  = link_to edit_api_phase_path(phase) do
+                    = icon('fa', 'check-circle')
+                    フェーズを切り替える
+                .goal-show-info__contents__phase-header__title__nav__link
+                  = link_to edit_project_project_phase_path(@project,phase) do
+                    = icon('fa', 'edit')
+                  = link_to project_peoject_phase_path(@project,phase), method: :delete do
+                    = icon('fa', 'trash')
+              %p.goal-show-info__contents__phase-header__title__phase
+                = phase.title
+          .goal-show-info__contents__top
+            .goal-show-info__contents__top__phase
+              %p#phase_data{data: {phase: {id: phase.id}}}
+            .goal-show-info__contents__top__tasks
+              .goal-show-info__contents__top__tasks__title
+                %p タスクのチェック
+              - unless phase.project_tasks.empty?
+                - sort_created_at(phase.project_tasks).each do |task|
+                  .goal-show-info__contents__top__tasks__index
+                    .goal-show-info__contents__top__tasks__index__timestamp
+                      %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
+                        - unless task.task_flg == false
+                          = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日"
+                    .goal-show-info__contents__top__tasks__index__checkbox
+                      .goal-show-info__contents__top__tasks__index__checkbox__main
+                        %label.goal-show-info__contents__accbox__accshow__checkbox__label
+                          - if task.user_id == current_user.id
+                            - if task.task_flg == true
+                              %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox", :checked => "checked"}
+                            - else
+                              %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
+                            = task.title
+                            #task{data: {task: {id: task.id}}}
+                          - else
+                            - if task.task_flg == true
+                              %span
+                                = icon('fa', 'check-square')
+                            - else                            
+                            = task.title
+                          #task{data: {task: {id: task.id}}}
+                      .goal-show-info__contents__top__tasks__index__checkbox__link
+                        = link_to edit_project_phase_project_task_path(phase, task) do
+                          = icon('fa', 'edit')
+                        = link_to new_project_phase_project_task_path(phase), method: :delete do
+                          = icon('fa', 'trash')
+              - else
+                %p タスクはありません          
+              .goal-show-info__contents__top__tasks__create
+                = link_to new_project_phase_project_task_path(phase) do
+                  = icon('fa', 'tasks')
+                  タスクの作成
+          .goal-show-info__contents__bottom
+            .goal-show-info__contents__bottom__accbox
+              %label.goal-show-info__contents__bottom__accbox__label
+                %span
+                  = icon('fa', 'comment')
+                コメントメニュー
+                = icon('fa', 'angle-down')
+                %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
+                .goal-show-info__contents__bottom__accbox__accshow
+                  .goal-show-info__contents__bottom__comments
+                    - unless phase.project_comments.empty?
+                      - sort_created_at(phase.project_comments).each do |comment|
+                        .goal-show-info__contents__bottom__comments__content
+                          .goal-show-info__contents__bottom__comments__content__comment
+                            %p 
+                              = icon('fa', 'user-edit')
+                              = comment.user.name
+                              %br
+                              = comment.content
+                            = link_to project_phase_project_comment_path(@project_phase,comment), method: :delete do
+                              = icon('fa', 'trash')
+                    .goal-show-info__contents__bottom__comments__form{data: {commentphase: {id: phase.id}}}
+                      .token{data: {authenticity: {token: form_authenticity_token}}}
+                      %input{:type => "text", :placeholder => "コメント"}
+                      %button.project_comment_button
+                        = icon('fa', 'paper-plane')
+        .goal-show-info__create
+          = link_to new_project_project_phase_path(@project) do
+            = icon('fa', 'plus-circle')
+            フェーズを追加
+    - else
+      .goal-show-info__contents
+        %p.empty empty
+        = link_to new_project_project_phase_path(@project) do
+          = icon('fa', 'plus')
+          フェーズを追加 

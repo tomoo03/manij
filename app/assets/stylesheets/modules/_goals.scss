@@ -93,80 +93,179 @@
   }
   &__contents {
     width: 100%;
-    margin-bottom: 3rem;
     padding: 0.5rem;
     background-color: $white;
     @include border();
     overflow: scroll;
     &__phase-header {
-      font-size: 1.5rem;
-      background: lightsalmon;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: bolder;
+      display: flex;
+      justify-content: space-between;
+      &__title {
+        width: 100%;
+        &__phase {
+          padding-left: 0.5rem;
+          border-left: 0.5rem solid #f47d4a;
+        }
+      }
+      &__title__nav {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        &__link {
+          display: flex;
+          align-items: flex-end;
+         a {
+          @include icon();
+        }
+        }
+        span {
+          color: green;
+        }
+      }
     }
     &__top {
       width: 100%;
-      height: 100%;
-      background: lightblue;
-      display: flex;
-      justify-content: space-evenly;
+      height: 80%;
       &__phase {
-        width: 55%;
+        width: 100%;
       }
-      &__comments {
-        width: 45%;
-        input {
-          width: 95%;
-          border: 0.1rem solid $lightgray;
+      &__tasks {
+        width: 100%;
+        &__title {
+          border-bottom: 0.1rem solid $lightgray;
+        }
+        &__index {
+          padding: 0.5rem 0;
+          margin-bottom: 0.2rem;
+          &__timestamp {
+            padding-left: 0.8rem;
+            font-size: 0.6rem;
+          }
+          &__checkbox {
+            display: flex;
+            justify-content: space-between;
+            &__link {
+              display: flex;
+              align-items: flex-end;
+              a {
+                @include icon();
+              }
+            }
+            label {
+              display: inline-block;
+            }
+            input {
+              margin-right: 0.2rem;
+            }
+          }
+        }
+        &__create {
+          margin-top: 2rem;
+          display: flex;
+          justify-content: flex-end;
         }
       }
     }
     &__bottom {
+      width: 100%;
       height: 20%;
-      background: lightgreen;
+      margin: 0.3rem 0;
+      padding-top: 0.5rem;
+      border-top: 0.1rem solid $lightgray;
+      &__accbox {
+        width: 100%;
+        &__label {
+          margin: 1.5px 0;
+          cursor: pointer;
+          span {
+            color: gray;
+          }
+        }
+        input {
+          display: none;
+        }
+        &__cssacc:checked + &__accshow {
+          width: 100%;
+          display: block;
+          opacity: 1;
+        }
+      }
+      &__accbox &__accbox__accshow {
+        overflow: hidden;
+        display: none;
+        opacity: 0;
+      }
+      &__comments {
+        width: 100%;
+        height: 100%;
+        &__content {
+          width: 100%;
+          &__comment {
+            width: 100%;
+            padding: 0.2rem 0;
+            margin: 0.5rem 0;
+            line-height: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+        &__form {
+          width: 95%;
+          margin-top: 0.1rem;
+          display: flex;
+          align-items: center;
+          position: relative;
+          button {
+            color: #4cb5f5;
+            position: absolute;
+            right: 0.5em;
+          }
+          input {
+            width: 100%;
+            padding-right: 1.4rem;
+            background: #f8f5f2;
+            @include border();
+            border-radius: 0.3rem;
+            display: inline;
+          }
+        }
+      }
     }
 
     &__phase__config p {
       display: inline-block;
       cursor: pointer;
     }
-    &__accbox {
-      width: 100%;
-      margin-top: 1.5rem;
-      label {
-        display: inline-block;
-        margin: 1.5px 0;
-        cursor: pointer;
-      }
-      input {
-        display: none;
-      }
-      &__cssacc:checked + &__accshow {
-        width: 100%;
-        height: auto;
-        background: $white;
-        display: block;
-        opacity: 1;
-      }
-      &__accshow__checkbox {
-        display: flex;
-        label {
-          cursor: default;
-        }
-        input {
-          display: inline-block;
-        }
-        p {
-          padding-top: 0.3rem;
-          margin-left: 1rem;
-          font-size: 0.7rem;
-          cursor: default;
-        }
-      }
+  }
+  &__create {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: flex-end;
+    a {
+
     }
-    &__accbox &__accbox__accshow {
-      overflow: hidden;
-      display: none;
-      opacity: 0;
+  }
+}
+
+.project-show-info__contents__top__tasks__index__checkbox {
+  display: flex;
+  justify-content: space-between;
+  &__link {
+    display: flex;
+    align-items: flex-end;
+    a {
+      @include icon();
     }
+  }
+  label {
+    display: inline-block;
+  }
+  input {
+    margin-right: 0.2rem;
   }
 }
 
