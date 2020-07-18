@@ -9,12 +9,12 @@ class PhasesController < ApplicationController
 
   def create
     @phase = Phase.new(phase_params)
-    if phase.save
-      if phase.goal.phase_title.nil?
+    if @phase.save
+      if @phase.goal.phase_title.nil?
         goal = Goal.find(params[:goal_id])
-        goal.update_attributes(title: goal.title, phase_title: phase.title)
+        goal.update(title: goal.title, phase_title: @phase.title)
       end
-      redirect_to user_goal_path(current_user, phase.goal)
+      redirect_to user_goal_path(current_user, @phase.goal)
     else
       render :new
     end

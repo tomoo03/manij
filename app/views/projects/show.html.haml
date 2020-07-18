@@ -4,36 +4,42 @@
       %h2.goal-show-info__header__title
         = @project.title
       .goal-show-info__header__action
-      -#   - unless @goal.minds.empty?
-      -#     - @goal.minds.each do |mind|
-      -#       %p 
-      -#         = mind.title
-      -#   - else
-      -#     %p アクションを追加して下さい
+        - unless @project.project_minds.empty?
+          - @project.project_minds.each do |project_mind|
+            %p 
+              = project_mind.title
+        - else
+          %p アクションを追加して下さい
       .goal-show-info__header__test-link
-        -# = link_to 'アクションを追加する', new_goal_mind_path(@goal)
+        = link_to 'アクションを追加する', new_project_project_mind_path(@project)
         = link_to 'フェーズを追加', new_project_project_phase_path(@project)
     - unless @project_phases.empty?
       - @project_phases.each do |project_phase|
         .goal-show-info__contents
-          .goal-show-info__contents__phase
-            .goal-show-info__contents__phase__config
-              - unless project_phase.title == @project.phase_title
-                %p 現在のフェーズに変更
-              - else
-                %p 進行中のフェーズ
-            %p#project_phase_data{data: {project_phase: {id: project_phase.id}}}
+          .project-show-info__contents__phase-title
+            %p
               = project_phase.title
-              = link_to 'フェーズを編集する', edit_project_project_phase_path(@project,project_phase)
-            -# .token{data: {authenticity: {token: form_authenticity_token}}}
-            -# %input{:type => "text", :placeholder => "コメント"}
-            -# %button.comment_button 送信
-            .goal-show-info__contents__phase__menu
-              -# .goal-show-info__contents__phase__comments
-              -#   - unless phase.comments.empty?
-              -#     - sort_created_at(phase.comments).each do |comment|
-              -#       %p 
-              -#         = comment.content
+          .project-show-info__contents__top
+            .goal-show-info__contents__phase
+              .project-show-info__contents__phase__config
+                - unless project_phase.title == @project.phase_title
+                  %p 現在のフェーズに変更
+                - else
+                  %p 進行中のフェーズ
+              %p#project_phase_data{data: {projectphase: {id: project_phase.id}}}
+                = link_to 'フェーズを編集する', edit_project_project_phase_path(@project,project_phase)
+            .project-show-info__contents__top__comments
+              .goal-show-info__contents__phase__comments
+                - unless project_phase.project_comments.empty?
+                  - sort_created_at(project_phase.project_comments).each do |project_comment|
+                    %p 
+                      = "#{project_comment.content} #{project_comment.user.name}"
+              .project-show-info__contents__comments
+                .token{data: {authenticity: {token: form_authenticity_token}}}
+                %input{:type => "text", :placeholder => "コメント"}
+                %button.project_comment_button 送信
+          .project-show-info__contents__phase__config
+            .project-show-info__contents__phase__tasks
               = link_to 'タスクを作成', new_project_phase_project_task_path(project_phase)
               - unless project_phase.project_tasks.empty?
                 .goal-show-info__contents__accbox
@@ -45,14 +51,18 @@
                         .goal-show-info__contents__accbox__accshow__checkbox
                           %label.goal-show-info__contents__accbox__accshow__checkbox__label
                             - if project_task.task_flg == true
-                              %input.goal-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox", :checked => "checked"}
+                              - unless project_task.user.id == current_user.id
+                                %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox", :checked => "checked"}
                             - else
-                              %input.goal-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
+                              - unless project_task.user.id == current_user.id
+                                %input.project-show-info__contents__accbox__accshow__checkbox__input{:type => "checkbox"}
                             = project_task.title
-                            #project_task{data: {project_task: {id: project_task.id}}}
+                            #project_task{data: {projecttask: {id: project_task.id}}}
                           %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
                             - unless project_task.task_flg == false
                               = "#{project_task.updated_at.year}年#{project_task.updated_at.mon}月#{project_task.updated_at.day}日"
+                              = "担当: #{project_task.user.name}"
+
               - else
                 %p タスクを作成して下さい
     - else
