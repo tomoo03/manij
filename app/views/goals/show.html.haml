@@ -16,24 +16,30 @@
     - unless @phases.empty?
       - @phases.each do |phase|
         .goal-show-info__contents
-          .goal-show-info__contents__phase
-            .goal-show-info__contents__phase__config
-              - unless phase.title == @goal.phase_title
-                %p 現在のフェーズに変更
-              - else
-                %p 進行中のフェーズ
-            %p#phase_data{data: {phase: {id: phase.id}}}
-              = phase.title
-              = link_to 'フェーズを編集する', edit_goal_phase_path(@goal,phase)
-            .token{data: {authenticity: {token: form_authenticity_token}}}
-            %input{:type => "text", :placeholder => "コメント"}
-            %button.comment_button 送信
-            .goal-show-info__contents__phase__menu
-              .goal-show-info__contents__phase__comments
+          .goal-show-info__contents__phase-header
+            %p
+              =phase.title
+          .goal-show-info__contents__top
+            .goal-show-info__contents__top__phase
+              .goal-show-info__contents__phase__config
+                - unless phase.title == @goal.phase_title
+                  %p 現在のフェーズに変更
+                - else
+                  %p 進行中のフェーズ
+              %p#phase_data{data: {phase: {id: phase.id}}}
+                = link_to 'フェーズを編集する', edit_goal_phase_path(@goal,phase)
+            .goal-show-info__contents__top__comments
+              .goal-show-info__contents__top__comments__content
                 - unless phase.comments.empty?
                   - sort_created_at(phase.comments).each do |comment|
                     %p 
                       = comment.content
+              .goal-show-info__contents__top__comments__form
+                .token{data: {authenticity: {token: form_authenticity_token}}}
+                %input{:type => "text", :placeholder => "コメント"}
+                %button.comment_button 送信
+          .goal-show-info__contents__bottom
+            .goal-show-info__contents__phase__tasks
               = link_to 'タスクを作成', new_phase_task_path(phase)
               - unless phase.tasks.empty?
                 .goal-show-info__contents__accbox

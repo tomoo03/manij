@@ -5,7 +5,10 @@
 
       .form-wrapper__container__new-user-form__field
         = f.text_field :title, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'フェーズのタイトル', autocomplete: "off"
+      .userform
+        - @users.each do |user|
+          = f.radio_button :user_id, user.id
+          = f.label :user_id, user.name, {value: :male}
         = f.hidden_field :task_flg, value: false
-        -# = f.hidden_field :user_id, value: current_user.id
       .form-wrapper__container__new-user-form__field__actions
         = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"

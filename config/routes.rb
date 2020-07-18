@@ -31,10 +31,19 @@ Rails.application.routes.draw do
 
   resources :projects, only: [:index] do
     resources :project_phases, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :project_minds
   end
 
   resources :project_phases, only: [:show] do
     resources :project_tasks
     resources :project_comments
+  end
+
+  namespace :api do
+    resources :project_tasks, only: [:index, :create], defaults: { format: 'json' }
+  end
+
+  namespace :api do
+    resources :project_phases, only: :index, defaults: { format: 'json' }
   end
 end

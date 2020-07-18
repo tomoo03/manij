@@ -4,10 +4,12 @@ class ProjectTasksController < ApplicationController
   def new
     @project_task = ProjectTask.new
     @project_phase = ProjectPhase.find(params[:project_phase_id])
+    @project = @project_phase.project
+    @users = @project.team.users
   end
 
   def create
-    @project_task = ProjectTask.new(project_task_params.merge(user_id: current_user.id))
+    @project_task = ProjectTask.new(project_task_params)
     if @project_task.save
       redirect_to team_project_path(@project_task.project_phase.project.team, @project_task.project_phase.project)
     else

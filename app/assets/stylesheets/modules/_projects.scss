@@ -1,0 +1,17 @@
+.projects-edit-wrapper {
+  @include wrapper();
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__relation-container {
+    @include border();
+    width: 80%;
+    height: 80%;
+    background-color: $white;
+    &__tasks {
+      width: 100%;
+      height: 100%;
+      overflow: scroll;
+    }
+  }
+}

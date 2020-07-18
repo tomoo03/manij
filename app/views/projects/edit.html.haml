@@ -1,0 +1,21 @@
+.projects-edit-wrapper
+  .projects-edit-wrapper__relation-container
+    %p 各メンバーのタスクを割り当ててください
+    .projects-edit-wrapper__relation-container__tasks
+      - @team_members.each do |member|
+        %p
+          = member.name
+        - @task_ary.each do |task|
+          .projects-edit-wrapper__relation-container__tasks__check{data: {member: {id: member.id}}}
+            %label
+              - if task.user_id
+                %input.projects-edit-wrapper__relation-container__tasks__checkbox{:type => "checkbox", :checked => "checked"}
+                = task.title
+                #membertask{data: {membertask: {id: task.id}}}
+                  %p.projects-edit-wrapper__relation-container__tasks__check__name
+                    = "担当: #{task.user.name}"
+              - else
+                %input.projects-edit-wrapper__relation-container__tasks__checkbox{:type => "checkbox"}
+                = task.title
+                #membertask{data: {membertask: {id: task.id}}}
+                  %p.projects-edit-wrapper__relation-container__tasks__check__name

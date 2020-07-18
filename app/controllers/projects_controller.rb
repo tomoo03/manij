@@ -17,7 +17,17 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @project_phases = @project.project_phases.order("created_at ASC")
+  end
+
+  def edit
+    @project = Project.find(params[:id])
     @project_phases = @project.project_phases
+    @task_ary = []
+    @project_phases.each do |project_phase|
+      @task_ary += project_phase.project_tasks
+    end
+    @team_members = @project.team.users
   end
 
   private

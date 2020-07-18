@@ -73,11 +73,10 @@
 }
 
 .goal-show-info {
-  width: 85%;
-  height: 100vh;
-  padding: 80px;
+  width: 80%;
+  height: 100%;
+  padding: 5rem 0;
   margin: 0 auto;
-  overflow: scroll;
   &__header {
     width: 100%;
     height: 3rem;
@@ -98,6 +97,33 @@
     padding: 0.5rem;
     background-color: $white;
     @include border();
+    overflow: scroll;
+    &__phase-header {
+      font-size: 1.5rem;
+      background: lightsalmon;
+    }
+    &__top {
+      width: 100%;
+      height: 100%;
+      background: lightblue;
+      display: flex;
+      justify-content: space-evenly;
+      &__phase {
+        width: 55%;
+      }
+      &__comments {
+        width: 45%;
+        input {
+          width: 95%;
+          border: 0.1rem solid $lightgray;
+        }
+      }
+    }
+    &__bottom {
+      height: 20%;
+      background: lightgreen;
+    }
+
     &__phase__config p {
       display: inline-block;
       cursor: pointer;
