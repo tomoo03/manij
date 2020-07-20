@@ -5,7 +5,7 @@ class User < ApplicationRecord
          password_length: 8..32
   validates :name, presence: true, uniqueness: true
   has_many :goals, dependent: :destroy
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
   has_many :project_tasks
   has_many :project_comments, dependent: :destroy

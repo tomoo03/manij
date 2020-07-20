@@ -21,23 +21,27 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = current_user.teams.find(params[:id])
   end
   
   def edit
+    @team = Team.find(params[:id])
   end
 
   def update
-    if @team.update(team_params)
-      redirect_to aciton: :index
+    team = Team.find(params[:id])
+    if team.update(team_params)
+      redirect_to team_path(team)
     else
       render :edit
     end
   end
 
   def destroy
-    
+    team = Team.find(params[:id])
+    team.destroy
+    redirect_to teams_path(team)
   end
+
   private
     def team_params
       params.require(:team).permit(:name, user_ids: [])
