@@ -1,21 +1,13 @@
-.projects-edit-wrapper
-  .projects-edit-wrapper__relation-container
-    %p 各メンバーのタスクを割り当ててください
-    .projects-edit-wrapper__relation-container__tasks
-      - @team_members.each do |member|
-        %p
-          = member.name
-        - @task_ary.each do |task|
-          .projects-edit-wrapper__relation-container__tasks__check{data: {member: {id: member.id}}}
-            %label
-              - if task.user_id
-                %input.projects-edit-wrapper__relation-container__tasks__checkbox{:type => "checkbox", :checked => "checked"}
-                = task.title
-                #membertask{data: {membertask: {id: task.id}}}
-                  %p.projects-edit-wrapper__relation-container__tasks__check__name
-                    = "担当: #{task.user.name}"
-              - else
-                %input.projects-edit-wrapper__relation-container__tasks__checkbox{:type => "checkbox"}
-                = task.title
-                #membertask{data: {membertask: {id: task.id}}}
-                  %p.projects-edit-wrapper__relation-container__tasks__check__name
+.form-wrapper
+  .form-wrapper__container
+    .form-wrapper__container__header
+      %p
+        = icon('fa', 'edit')
+        プロジェクトの編集
+    = form_with model: [@team, @project], url: team_project_path, class: "form-wrapper__container__form", local: true do |f|
+      .form-wrapper__container__form__field
+        %span
+          = icon('fa', 'pen')
+        = f.text_field :title, class: "form-wrapper__container__form__field__input", placeholder: 'タイトル', autofocus: true
+      .form-wrapper__container__form__field
+        = f.submit "Create", class: "form-wrapper__container__form__field__button"

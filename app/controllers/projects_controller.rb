@@ -28,12 +28,23 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project_phases = @project.project_phases
-    @task_ary = []
-    @project_phases.each do |project_phase|
-      @task_ary += project_phase.project_tasks
+    @project = Project.find(params[:id])
+    @team = @project.team
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    if @project.update(project_params)
+      redirect_to projects_path
+    else
+      render :edit
     end
-    @team_members = @project.team.users
+  end
+
+  def destroy
+    project = Project.find(params[:id])
+    project.destroy
+    redirect_to projects_path
   end
 
   private

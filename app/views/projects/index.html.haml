@@ -18,7 +18,7 @@
             .goal-index__container__contents__top__links
               = link_to edit_team_project_path(project.team, project) do
                 = icon('fa', 'edit')
-              = link_to team_project_path(project.team, project), method: :deleete do
+              = link_to team_project_path(project.team, project), method: :delete do
                 = icon('fa', 'trash')
           .goal-index__container__contents__status
             - if project.project_phases.present?
