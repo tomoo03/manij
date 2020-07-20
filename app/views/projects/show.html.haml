@@ -3,22 +3,35 @@
     .goal-show-info__header
       %h2.goal-show-info__header__title
         = @project.title
-      .goal-show-info__header__action
-        - unless @project.project_minds.empty?
-          - @project.project_minds.each do |mind|
+      .goal-show-info__header__remind
+        - unless @project_minds.present?
+          .goal-show-info__header__remind__title
             %p 
-              = mind.title
+              = icon('fa', 'clipboard-list')
+              リマインド
+          - @project.project_minds.each do |mind|
+            .goal-show-info__header__remind__index
+              %p 
+                = "・#{mind.title}"
+              .goal-show-info__header__remind__index__link
+                = link_to edit_project_project_mind_path(@project,mind) do
+                  = icon('fa', 'edit')
+                = link_to project_project_mind_path(@project,mind), method: :delete do
+                  = icon('fa', 'trash')
         - else
-          %p アクションを追加して下さい
-      .goal-show-info__header__test-link
-        = link_to 'アクションを追加する', new_project_project_mind_path(@project)
+          %p リマインドはありません
+      .goal-show-info__header__link
+        = link_to new_project_project_mind_path(@project) do
+          %span.blue
+            = icon('fa', 'plus-circle')
+          リマインドを追加する
     - if @project_phase.present?
       .goal-show-info__contents
         .goal-show-info__contents__phase-header
           .goal-show-info__contents__phase-header__title
             .goal-show-info__contents__phase-header__title__nav
               %p 
-                %span 
+                %span
                   = icon('fa', 'check-circle')
                 進行中のフェーズ
               .goal-show-info__contents__phase-header__title__nav__link
@@ -97,14 +110,16 @@
                       = icon('fa', 'paper-plane')
       .goal-show-info__create
         = link_to new_project_project_phase_path(@project) do
-          = icon('fa', 'plus-circle')
+          %span.blue
+            = icon('fa', 'plus-circle')
           フェーズを追加
     - elsif @project_phases.present? && @project_phase.nil?
     - else
       .goal-show-info__contents
         %p.empty empty
         = link_to new_project_project_phase_path(@project) do
-          = icon('fa', 'plus')
+          %span.blue
+            = icon('fa', 'plus')
           フェーズを追加    
     - unless @project_phases.empty?
       - @project_phases.each do |phase|
@@ -192,6 +207,7 @@
                         = icon('fa', 'paper-plane')
         .goal-show-info__create
           = link_to new_project_project_phase_path(@project) do
-            = icon('fa', 'plus-circle')
+            %span.blue
+              = icon('fa', 'plus-circle')
             フェーズを追加
     - else

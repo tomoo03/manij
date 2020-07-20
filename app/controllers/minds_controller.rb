@@ -17,14 +17,24 @@ class MindsController < ApplicationController
     end
   end
 
+  def edit
+    @mind = Mind.find(params[:id])
+    @goal = @mind.goal
+  end
+
   def update
     mind = Mind.find(params[:id])
-    mind.update_attributes(mind_params)
+    if mind.update(mind_params)
+      redirect_to user_goal_path(current_user, mind.goal)
+    else
+      render :edit
+    end
   end
 
   def destroy
-    mind = Mind.find
+    mind = Mind.find(params[:id])
     mind.destroy
+    redirect_to user_goal_path(current_user, mind.goal)
   end
 
   private

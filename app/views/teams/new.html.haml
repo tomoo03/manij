@@ -10,7 +10,8 @@
           = icon('fa', 'pen')
         = f.text_field :name, class: "form-wrapper__container__form__field__input", placeholder: 'チーム名', autofocus: true
       .form-wrapper__container__form__field
-        = f.collection_check_boxes :user_ids, User.all, :id, :name
+        .form-wrapper__container__form__field__check-boxes
+          = f.collection_check_boxes :user_ids, User.all, :id, :name
       .form-wrapper__container__form__field
         = f.submit "Create", class: "form-wrapper__container__form__field__button"
 

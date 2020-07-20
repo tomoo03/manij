@@ -1,0 +1,13 @@
+.form-wrapper
+  .form-wrapper__container
+    .form-wrapper__container__header
+      %p
+        = icon('fa', 'edit')
+        タイトルの編集
+    = form_with model: [@project, @project_mind], url: project_project_mind_path, class: "form-wrapper__container__form", local: true do |f|
+      .form-wrapper__container__form__field
+        %span
+          = icon('fa', 'pen')
+        = f.text_field :title, class: "form-wrapper__container__form__field__input", placeholder: 'タイトル', autofocus: true
+      .form-wrapper__container__form__field
+        = f.submit "Create", class: "form-wrapper__container__form__field__button"

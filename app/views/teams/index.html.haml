@@ -2,17 +2,18 @@
   .form-wrapper__container
     .form-wrapper__container__header
       %p
-        = icon('fa', 'plus-circle')
+        = icon('fa', 'user-friends')
         チームを選択
     .form-wrapper__container__form
-      .form-wrapper__container__form__field
-        - unless @teams.empty?
+      - unless @teams.empty?
+        .form-wrapper__container__form__teamfield
           %h2 チームを選択してください
-          - @teams.each do |team|
-            .team_field
-              %p
-                = link_to "#{team.name}", team_path(team)
-        - else
-          %h2 チームはありません
+        - @teams.each do |team|
+          .form-wrapper__container__form__teamfield
+            %p
+              = link_to "#{team.name}", team_path(team)
+      - else
+        %h2 チームはありません
+      .form-wrapper__container__form__teamfield
         %p
         = link_to 'チームを新規作成', new_team_path
