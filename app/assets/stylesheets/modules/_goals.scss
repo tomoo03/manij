@@ -329,7 +329,9 @@
           }
           input {
             width: 100%;
+            height: 1.5rem;
             padding-right: 1.4rem;
+            vertical-align: middle;
             background: #f8f5f2;
             @include border();
             border-radius: 0.3rem;
