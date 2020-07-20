@@ -36,8 +36,12 @@ class PhasesController < ApplicationController
   end
 
   def destroy
-    phase = Phase.find(params[:id])
-    phase.destroy
+    @phase = Phase.find(params[:id])
+    if @phase.title == @phase.goal.phase_title
+      @phase.goal.update_attribute(:phase_title, nil)
+    end
+    @phase.destroy
+    redirect_to user_goal_path(@phase.goal.user, @phase.goal)
   end
 
   private

@@ -1,6 +1,8 @@
 $overcast: #f1f1f2;
 $white: #fff;
 $lightgray: #dbdbdb;
+$lightblue: #4cb5f5;
+$orange: #f47d4a;
 @mixin wrapper() {
   width: 100vw;
   height: 100vh;
@@ -16,10 +18,18 @@ $lightgray: #dbdbdb;
 }
 @mixin icon() {
   margin-right: 0.2rem;
-  margin-left: 0.5rem;
+  margin-left: 1.2rem;
   color: #021c1e;
   font-size: 1.1rem;
   display: inline-block;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+@mixin hover {
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 @import "reset";

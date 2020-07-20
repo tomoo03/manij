@@ -2,7 +2,7 @@ $(function() {
   function buildHTML(message) {
     let html = 
       `<div style="width:100%;padding:0.2rem 0;display:flex;justify-content:space-between;"><p>${message.content}</p>
-       <a rel="nofollow" data-method="delete" href="/phases/${message.phase_id}/comments/${message.comment_id}"><i class="fa fa-trash"></i>
+       <a onMouseOver="this.style.opacity='0.8'" onMouseOut="this.style.opacity='1'" rel="nofollow" data-method="delete" href="/phases/${message.phase_id}/comments/${message.comment_id}"><i class="fa fa-trash"></i>
        </a></div>`
     return html;
   }
@@ -10,7 +10,7 @@ $(function() {
   function buildProjectHTML(message) {
     let html = 
     `<div style="width:100%;padding:0.2rem 0;display:flex;justify-content:space-between;"><p><i class="fa fa-user-edit"></i>${message.name}<br>${message.content}</p>
-    <a rel="nofollow" data-method="delete" href="/project_phases/${message.phase_id}/project_comments/${message.comment_id}"><i class="fa fa-trash"></i>
+    <a onMouseOver="this.style.opacity='0.8'" onMouseOut="this.style.opacity='1'" rel="nofollow" data-method="delete" href="/project_phases/${message.phase_id}/project_comments/${message.comment_id}"><i class="fa fa-trash"></i>
     </a></div>`
     return html;
   }

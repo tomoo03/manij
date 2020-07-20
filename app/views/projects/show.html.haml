@@ -12,7 +12,7 @@
           %p アクションを追加して下さい
       .goal-show-info__header__test-link
         = link_to 'アクションを追加する', new_project_project_mind_path(@project)
-    - unless @project_phase.nil?
+    - if @project_phase.present?
       .goal-show-info__contents
         .goal-show-info__contents__phase-header
           .goal-show-info__contents__phase-header__title
@@ -79,9 +79,9 @@
               %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
               .goal-show-info__contents__bottom__accbox__accshow
                 .goal-show-info__contents__bottom__comments
-                  - unless @project_phase.project_comments.empty?
-                    - sort_created_at(@project_phase.project_comments).each do |comment|
-                      .goal-show-info__contents__bottom__comments__content
+                  .goal-show-info__contents__bottom__comments__content
+                    - unless @project_phase.project_comments.empty?
+                      - sort_created_at(@project_phase.project_comments).each do |comment|
                         .goal-show-info__contents__bottom__comments__content__comment
                           %p
                             = icon('fa', 'user-edit')
@@ -99,6 +99,7 @@
         = link_to new_project_project_phase_path(@project) do
           = icon('fa', 'plus-circle')
           フェーズを追加
+    - elsif @project_phases.present? && @project_phase.nil?
     - else
       .goal-show-info__contents
         %p.empty empty
@@ -112,13 +113,13 @@
             .goal-show-info__contents__phase-header__title
               .goal-show-info__contents__phase-header__title__nav
                 %p 
-                  = link_to edit_api_phase_path(phase) do
+                  = link_to api_phase_path(phase), method: :patch do
                     = icon('fa', 'check-circle')
                     フェーズを切り替える
                 .goal-show-info__contents__phase-header__title__nav__link
                   = link_to edit_project_project_phase_path(@project,phase) do
                     = icon('fa', 'edit')
-                  = link_to project_peoject_phase_path(@project,phase), method: :delete do
+                  = link_to project_project_phase_path(@project,phase), method: :delete do
                     = icon('fa', 'trash')
               %p.goal-show-info__contents__phase-header__title__phase
                 = phase.title
@@ -173,16 +174,16 @@
                 %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
                 .goal-show-info__contents__bottom__accbox__accshow
                   .goal-show-info__contents__bottom__comments
-                    - unless phase.project_comments.empty?
-                      - sort_created_at(phase.project_comments).each do |comment|
-                        .goal-show-info__contents__bottom__comments__content
+                    .goal-show-info__contents__bottom__comments__content
+                      - unless phase.project_comments.empty?
+                        - sort_created_at(phase.project_comments).each do |comment|
                           .goal-show-info__contents__bottom__comments__content__comment
                             %p 
                               = icon('fa', 'user-edit')
                               = comment.user.name
                               %br
                               = comment.content
-                            = link_to project_phase_project_comment_path(@project_phase,comment), method: :delete do
+                            = link_to project_phase_project_comment_path(phase,comment), method: :delete do
                               = icon('fa', 'trash')
                     .goal-show-info__contents__bottom__comments__form{data: {commentphase: {id: phase.id}}}
                       .token{data: {authenticity: {token: form_authenticity_token}}}
@@ -194,8 +195,3 @@
             = icon('fa', 'plus-circle')
             フェーズを追加
     - else
-      .goal-show-info__contents
-        %p.empty empty
-        = link_to new_project_project_phase_path(@project) do
-          = icon('fa', 'plus')
-          フェーズを追加 

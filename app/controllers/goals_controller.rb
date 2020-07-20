@@ -1,8 +1,7 @@
 class GoalsController < ApplicationController
   include ApplicationHelper
-  before_action :set_goal, except: [:index, :new, :create]
   before_action :move_to_sign_in
-  before_action :check_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_goal, except: [:new, :create, :index]
 
   def new
     @goal = Goal.new
@@ -19,13 +18,15 @@ class GoalsController < ApplicationController
 
   def destroy
     @goal.destroy
+    redirect_to goals_path
   end
 
   def index
-    @goals = current_user.goals.order("created_at DESC")
+    @goals = current_user.goals.order("created_at DESC") unless current_user.goals.empty?
   end
 
   def show
+    @goal = current_user.goals.find(params[:id])
     @phase = Phase.find_by(title: @goal.phase_title)
     @phases = @goal.phases.where.not(title: @goal.phase_title).order("created_at ASC")
     # phase_ids = @phases.pluck(:id)
@@ -36,7 +37,11 @@ class GoalsController < ApplicationController
   end
 
   def update
-    goal.update(goal_params)
+    if @goal.update(goal_params)
+      redirect_to goals_path
+    else
+      render :edit
+    end
   end
 
   private

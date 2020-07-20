@@ -1,48 +1,83 @@
 .form-wrapper {
   @include wrapper();
-  padding-top: 100px;
   &__container {
-    width: 40%;
-    height: 90%;
-    margin: 0 auto;
+    width: 90vw;
+    max-width: 30rem;
+    height: 80vh;
+    padding: 2rem 1rem;
+    margin: 5rem auto 0;
     background-color: $white;
-    @include box-shadow();
+    @include border();
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    &__heading {
-      margin-bottom: 1rem;
-      color: #f47d4a;
-      font-size: 48px;
-    }
-    &__new-user-form {
+    &__header {
       width: 100%;
-      height: 75%;
+      height: 100%;
+      font-size: 1.7rem;
+      color: gray;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &__form {
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       &__field {
         width: 100%;
-        height: 3rem;
-        margin-bottom: 20px;
-        font-size: 1.4rem;
+        height: 100%;
+        margin-bottom: 1rem;
         display: flex;
         justify-content: center;
-        &__input {
-          width: 90%;
-          padding: 0 5px;
-          border: 1px solid #d5d6d2;
-          border-radius: 2px;
+        position: relative;
+        &__remember {
+          width: 100%;
+          margin-top: 1.3rem;
+          margin-bottom: 0.7rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          input {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 1rem;
+          }
         }
-        &__actions {
-          margin-top: 0.5rem;
-          &--button {
-            padding: 1rem 2rem;
-            border-radius: 2px;
-            color: $white;
-            background-color: #bbc3c6;
+        span {
+          color: $lightblue;
+          font-size: 1rem;
+          position: absolute;
+          top: 0.9rem;
+          left: 0.7rem;
+        }
+        &__input {
+          width: 100%;
+          height: 3rem;
+          padding-left: 2.1rem;
+          border: 0.1rem solid #d5d6d2;
+          border-radius: 1rem;
+        }
+        &__checkbox {
+
+        }
+        &__button {
+          width: 85%;
+          height: 3rem;
+          padding: 0.5rem 0.3rem;
+          border: 0.1rem solid #d5d6d2;
+          border-radius: 1rem;
+          font-size: 1.3rem;
+          color: $white;
+          background-color: #4cb5f5;
+          text-align: center;
+          &:hover {
+            opacity: 0.8;
           }
         }
         &__checkbox {
@@ -51,6 +86,31 @@
         }
         &__label {
           font-size: 1rem;
+        }
+      }
+    }
+    &__info {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      p {
+        margin-bottom: 1rem;
+        color: gray;
+      }
+      &__button {
+        width: 85%;
+        padding: 0.5rem 0.3rem;
+        border: 0.1rem solid #d5d6d2;
+        border-radius: 1rem;
+        font-size: 1.3rem;
+        color: $white;
+        background-color: gray;
+        text-align: center;
+        &:hover {
+          opacity: 0.8;
         }
       }
     }

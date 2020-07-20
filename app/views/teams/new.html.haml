@@ -1,11 +1,27 @@
 .form-wrapper
   .form-wrapper__container
-    %h2.form-wrapper__container__heading チームの新規作成
-    = form_with model: @team, class: "form-wrapper__container__new-user-form", local: true do |f|
-
-      .form-wrapper__container__new-user-form__field
-        = f.text_field :name, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'チーム名', autocomplete: "off"
-      .form-wrapper__container__new-user-form__field__checkbox
+    .form-wrapper__container__header
+      %p
+        = icon('fa', 'plus-circle')
+        チームの新規作成
+    = form_with model: @team, url: teams_path, class: "form-wrapper__container__form", local: true do |f|
+      .form-wrapper__container__form__field
+        %span
+          = icon('fa', 'pen')
+        = f.text_field :name, class: "form-wrapper__container__form__field__input", placeholder: 'チーム名', autofocus: true
+      .form-wrapper__container__form__field
         = f.collection_check_boxes :user_ids, User.all, :id, :name
-      .form-wrapper__container__new-user-form__field__actions
-        = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"
+      .form-wrapper__container__form__field
+        = f.submit "Create", class: "form-wrapper__container__form__field__button"
+
+-# .form-wrapper
+-#   .form-wrapper__container
+-#     %h2.form-wrapper__container__heading チームの新規作成
+-#     = form_with model: @team, class: "form-wrapper__container__new-user-form", local: true do |f|
+
+-#       .form-wrapper__container__new-user-form__field
+-#         = f.text_field :name, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'チーム名', autocomplete: "off"
+-#       .form-wrapper__container__new-user-form__field__checkbox
+-#         = f.collection_check_boxes :user_ids, User.all, :id, :name
+-#       .form-wrapper__container__new-user-form__field__actions
+-#         = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"

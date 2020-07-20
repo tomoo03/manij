@@ -1,37 +1,102 @@
 .goal-wrapper
-  .goal-index-info
-    .goal-index-info__main
-      .goal-index-info__main__statusbar
-        %p
-          = "立てた目標：#{@goals.count}" 
-      .goal-index-info__main__status-label
-        %p 目標
-        - current_user.teams.each do |team|
+  .goal-index__container
+    - unless @goals.nil?
+      .goal-index__container__header
+        .goal-index__container__header__title
           %p
-            = team.name
-          %p
-            = link_to "チーム一覧へ", teams_path
-      - @goals.each do |goal|
-        .goal-index-info__main__status
-          .goal-index-info__main__status__right
-            %p 
-              = goal.title
-              - if goal.phase_title
-                %p 
-                  = "進行中のフェーズ #{goal.phase_title}"
-                - goal.phases.each do |phase|
-                  - if goal.phase_title == phase.title
+            = "目標の総数：#{@goals.count}"
+        .goal-index__container__header__edit
+          = link_to new_user_goal_path(current_user) do
+            = icon('fa', 'plus-circle')
+            目標を追加
+      - @goals.each do |goal|  
+        .goal-index__container__contents
+          .goal-index__container__contents__top
+            .goal-index__container__contents__top__title
+              %p
+                = goal.title
+            .goal-index__container__contents__top__links
+              = link_to edit_user_goal_path(current_user, goal) do
+                = icon('fa', 'edit')
+              = link_to user_goal_path(current_user, goal), method: :delete do
+                = icon('fa', 'trash')
+          .goal-index__container__contents__status
+            - if goal.phase_title
+              - goal.phases.each do |phase|
+                - if phase.title == goal.phase_title
+                  .goal-index__container__contents__status__phase
                     %p
-                      = "タスク終了数 #{sort_tasks(phase.tasks).count} / #{phase.tasks.count}"
-              - else
-                %p 進行中のフェーズ なし
-          .goal-index-info__main__status__left
-            .goal-index-info__main__status__left__link
-              = link_to 'Show', user_goal_path(current_user, goal)
-    .goal-index-info__sidebar
-      .goal-index-info__sidebar__task-list
-        .goal-index-info__sidebar__task-list__label
-          %p task index
-        .goal-index-info__sidebar__task-list__task
-          %p task1
-          %p 
+                      %span
+                        = icon('fa', 'check-circle')
+                      現在のフェーズ
+                    %p.goal-index__container__contents__status__phase__title
+                      = "・#{goal.phase_title}"
+                    .goal-index__container__contents__status__phase__task
+                      .goal-index__container__contents__status__phase__task__count
+                        %p
+                          = "完了したタスク数 :#{sort_tasks(phase.tasks).count}"
+                        %p
+                          = "残りのタスク数 :#{phase.tasks.count - sort_tasks(phase.tasks).count}"
+                      .goal-index__container__contents__status__phase__task__show
+                        = link_to user_goal_path(current_user, goal) do
+                          %span
+                            = icon('fa', 'vote-yea')
+                          詳細ページ
+                  .goal-index__container__contents__status__task-unfinished
+                    .goal-show-info__contents__bottom__accbox
+                      %label.goal-show-info__contents__bottom__accbox__label
+                        %span
+                          = icon('fa', 'tasks')
+                        実行中のタスクを確認
+                        = icon('fa', 'angle-down')
+                        %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
+                        .goal-show-info__contents__bottom__accbox__accshow
+                          .goal-index__container__contents__status__task-unfinished__task
+                            - unless phase.tasks.empty?
+                              - phase.tasks.each do |task|
+                                - if task.task_flg == true
+                                  %p
+                                    = icon('fa', 'check-square')
+                                    = task.title
+                                - else
+                                  %p
+                                    = icon('fa', 'caret-right')
+                                    = task.title
+                            - else
+                              %p タスク無し    
+                - else
+                  .goal-index__container__contents__status__phase
+                    %p.goal-index__container__contents__status__phase__info
+                      フェーズが設定されていません
+                  .goal-index__container__contents__status__phase__task
+                    .goal-index__container__contents__status__phase__task__count
+                    .goal-index__container__contents__status__phase__task__show
+                      = link_to user_goal_path(current_user, goal) do
+                        %span
+                          = icon('fa', 'vote-yea')
+                        詳細ページ                    
+            - else
+              .goal-index__container__contents__status__phase
+                %p.goal-index__container__contents__status__phase__info
+                  詳細ページでフェーズを作成して下さい
+              .goal-index__container__contents__status__phase__task
+                .goal-index__container__contents__status__phase__task__count
+                .goal-index__container__contents__status__phase__task__show
+                  = link_to user_goal_path(current_user, goal) do
+                    %span
+                      = icon('fa', 'vote-yea')
+                    詳細ページ
+    - else
+      .goal-index__container__header
+        .goal-index__container__header__title
+          %p
+            目標の総数：0 
+        .goal-index__container__header__edit
+          = link_to new_user_goal_path(current_user) do
+            = icon('fa', 'plus-circle')
+            目標を追加
+      .goal-index__container__contents
+        .goal-index__container__contents__top
+          .goal-index__container__contents__top__title
+            %p
+              目標を作成しましょう

@@ -2,78 +2,141 @@
   @include wrapper();
 }
 
-.goal-index-info {
-  width: 80%;
-  height: 100vh;
-  margin: 0 auto;
+.goal-index__container {
+  width: 90%;
+  max-width: 50rem;
+  height: 100%;
+  margin: 5rem auto 0;
   display: flex;
-  &__main {
-    width: 75%;
-    height: 100%;
-    margin: 0 auto;
-    padding-top: 80px;
-    overflow: scroll;
-    &__statusbar {
-      width: 95%;
-      height: 60px;
-      margin: 0 auto 50px;
-      padding: 10px;
-      border-radius: 3px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  &__header {
+    width: 100%;
+    height: 3rem;
+    margin-bottom: 5rem;
+    &__title {
+      width: 100%;
+      height: 3rem;
+      padding: 0.3rem;
+      background: $white;
+      border-radius: 1rem;
       @include border;
-      background-color: $white;
-    }
-    &__status-label {
-      width: 95%;
-      height: 30px;
-      margin: 0 auto;
-    }
-    &__status {
-      width: 95%;
-      height: 150px;
-      margin: 0 auto 50px;
-      padding: 20px;
-      border-radius: 3px;
-      background-color: $white;
-      @include border();
+      border-left: 0.5rem solid $lightblue;
       display: flex;
-      justify-content: space-between;
-      &__left {
-        display: flex;
-        align-items: flex-end;
+      align-items: center;
+      p {
+        font-size: 1.2rem;
+      }
+    }
+    &__edit {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      a {
+        margin-top: 0.3rem;
+        @include hover();
       }
     }
   }
-  &__sidebar {
-    width: 40%;
-    height: 100%;
-    padding-top: 80px;
-    &__task-list {
-      width: 85%;
-      height: 100%;
-      margin: 0 auto;
-      border-radius: 3px;
-      @include border();
-      background-color: $white;
-      overflow: scroll;
-      &__label {
-        width: 100%;
-        height: 30px;
-        background-color: #e2e8e4;
-        padding: 10px;
-        box-shadow: 0 1px 3px rgba(160,166,179,0.3);
+  &__contents {
+    width: 100%;
+    margin-bottom: 3rem;
+    padding: 0.3rem;
+    background: $white;
+    @include border();
+    &__top {
+      width: 100%;
+      margin-top: 0.3rem;
+      margin-bottom: 1rem;
+      border-left: 0.5rem solid $orange;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &__title {
+        font-size: 1.1rem;
       }
-      &__task {
-        width: 100%;
-        height: 60px;
-        margin: 0 auto;
-        padding: 10px;
+      &__links {
+        display: flex;
+        a {
+          @include icon();
+        }
       }
+    }
+    &__status {
+      width: 100%;
+      margin-bottom: 0.3rem;
+      &__phase { 
+        width: 100%;
+        padding: 0.3rem;
+        margin-bottom: 1rem;
+        @include border();
+        span {
+          color: green;
+        }
+        &__title {
+          margin-bottom: 0.8rem;
+          border-bottom: 0.1rem solid $orange;
+          font-weight: bolder;
+          display: inline-block;
+        }
+        &__task {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          &__count {
+
+          }
+          &__show {
+            display: flex;
+            align-items: flex-end;
+            a:hover {
+              opacity: 0.8;
+            }
+            span {
+              color: $lightblue;
+            }
+          }
+        }
+        &__info {
+          color: gray;
+        }
+      }
+      &__task-unfinished__task {
+        p {
+          margin: 0.5rem 0;
+        }
+      }
+    }
+    &__team-status {
+
+    }
+    &__projects {
+      &__index {
+        &__link {
+          a:hover {
+            @include hover();
+          }
+        }
+      }
+    }
+  }
+  &__bottom {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    a:hover {
+      opacity: 0.8;
+    }
+    span {
+      color: $lightblue;
     }
   }
 }
 
 .goal-show-info {
-  width: 80%;
+  width: 90%;
+  max-width: 50rem;
   height: 100%;
   padding: 5rem 0;
   margin: 0 auto;
@@ -86,7 +149,7 @@
     &__title {
       width: 100%;
       border-bottom: 1px solid #dbdbdb;
-      font-size: 3rem;
+      font-size: 1.5rem;
       text-align: center;
       letter-spacing: 0.2rem;
     }
@@ -107,7 +170,7 @@
         width: 100%;
         &__phase {
           padding-left: 0.5rem;
-          border-left: 0.5rem solid #f47d4a;
+          border-left: 0.5rem solid $orange;
         }
       }
       &__title__nav {
@@ -120,6 +183,7 @@
           align-items: flex-end;
          a {
           @include icon();
+          @include hover();
         }
         }
         span {
@@ -157,6 +221,7 @@
             }
             label {
               display: inline-block;
+              cursor: pointer;
             }
             input {
               margin-right: 0.2rem;
@@ -167,6 +232,9 @@
           margin-top: 2rem;
           display: flex;
           justify-content: flex-end;
+          a:hover {
+            @include hover();
+          }
         }
       }
     }
@@ -183,6 +251,9 @@
           cursor: pointer;
           span {
             color: gray;
+          }
+          &:hover {
+            @include hover();
           }
         }
         input {
@@ -211,11 +282,14 @@
             line-height: 1.3rem;
             display: flex;
             justify-content: space-between;
+            a:hover {
+              @include hover();
+            }
           }
         }
         &__form {
           width: 95%;
-          margin-top: 0.1rem;
+          margin-top: 3rem;
           display: flex;
           align-items: center;
           position: relative;
@@ -223,6 +297,9 @@
             color: #4cb5f5;
             position: absolute;
             right: 0.5em;
+            &:hover {
+              @include hover();
+            }
           }
           input {
             width: 100%;
@@ -246,7 +323,7 @@
     display: flex;
     justify-content: flex-end;
     a {
-
+      @include hover();
     }
   }
 }

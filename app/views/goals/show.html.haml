@@ -9,10 +9,10 @@
             %p 
               = mind.title
         - else
-          %p アクションを追加して下さい
+          %p リマインドを追加して下さい
       .goal-show-info__header__test-link
-        = link_to 'アクションを追加する', new_goal_mind_path(@goal)
-    - unless @phase.nil?
+        = link_to 'リマインドを追加する', new_goal_mind_path(@goal)
+    - if @phase
       .goal-show-info__contents
         .goal-show-info__contents__phase-header
           .goal-show-info__contents__phase-header__title
@@ -53,7 +53,7 @@
                     .goal-show-info__contents__top__tasks__index__checkbox__link
                       = link_to edit_phase_task_path(@phase, task) do
                         = icon('fa', 'edit')
-                      = link_to new_phase_task_path(@phase), method: :delete do
+                      = link_to phase_task_path(@phase, task), method: :delete do
                         = icon('fa', 'trash')
             - else
               %p タスクはありません          
@@ -71,14 +71,16 @@
               %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
               .goal-show-info__contents__bottom__accbox__accshow
                 .goal-show-info__contents__bottom__comments
-                  - unless @phase.comments.empty?
-                    - sort_created_at(@phase.comments).each do |comment|
-                      .goal-show-info__contents__bottom__comments__content
+                  .goal-show-info__contents__bottom__comments__content
+                    - unless @phase.comments.empty?
+                      - sort_created_at(@phase.comments).each do |comment|
                         .goal-show-info__contents__bottom__comments__content__comment
                           %p 
                             = comment.content
                           = link_to phase_comment_path(@phase,comment), method: :delete do
                             = icon('fa', 'trash')
+                    - else
+                      .goal-show-info__contents__bottom__comments__content__comment
                   .goal-show-info__contents__bottom__comments__form{data: {commentphase: {id: @phase.id}}}
                     .token{data: {authenticity: {token: form_authenticity_token}}}
                     %input{:type => "text", :placeholder => "コメント"}
@@ -88,11 +90,16 @@
         = link_to new_goal_phase_path(@goal) do
           = icon('fa', 'plus-circle')
           フェーズを追加
+    - elsif @phases && @phase.nil?
+      .goal-show-info__contents
+        = link_to new_goal_phase_path(@goal) do
+          = icon('fa', 'plus-circle')
+          フェーズを追加    
     - else
       .goal-show-info__contents
         %p.empty empty
         = link_to new_goal_phase_path(@goal) do
-          = icon('fa', 'plus')
+          = icon('fa', 'plus-circle')
           フェーズを追加    
     - unless @phases.empty?
       - @phases.each do |phase|
@@ -136,7 +143,7 @@
                       .goal-show-info__contents__top__tasks__index__checkbox__link
                         = link_to edit_phase_task_path(phase, task) do
                           = icon('fa', 'edit')
-                        = link_to new_phase_task_path(phase), method: :delete do
+                        = link_to phase_task_path(phase, task), method: :delete do
                           = icon('fa', 'trash')
               - else
                 %p タスクはありません          
@@ -154,9 +161,9 @@
                 %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
                 .goal-show-info__contents__bottom__accbox__accshow
                   .goal-show-info__contents__bottom__comments
-                    - unless phase.comments.empty?
-                      - sort_created_at(phase.comments).each do |comment|
-                        .goal-show-info__contents__bottom__comments__content
+                    .goal-show-info__contents__bottom__comments__content
+                      - unless phase.comments.empty?
+                        - sort_created_at(phase.comments).each do |comment|
                           .goal-show-info__contents__bottom__comments__content__comment
                             %p 
                               = comment.content
@@ -171,9 +178,3 @@
           = link_to new_goal_phase_path(@goal) do
             = icon('fa', 'plus-circle')
             フェーズを追加
-    - else
-      .goal-show-info__contents
-        %p.empty empty
-        = link_to new_goal_phase_path(@goal) do
-          = icon('fa', 'plus')
-          フェーズを追加 

@@ -1,27 +1,35 @@
 header {
-  width: 100%;
+  width: 100vw;
   height: 3rem;
   box-shadow: 0 0.1rem 0.2rem rgba(160,166,179,0.3);
   background-color: $white;
   position: fixed;
   top: 0;
   .header-items {
-    width: 90%;
+    width: 100%;
+    max-width: 50rem;
     height: 100%;
     margin: 0 auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     &__links {
       display: inline-block;
+      button {
+        &:hover {
+          opacity: 0.6;
+        }
+      }
       &--logo {
-        font-size: 2rem;
+        font-size: 1rem;
         display: inline-block;
       }
       &--box {
         height: 100%;
+        display: inline-block;
       }
       &__menu {
+        width: 100%;
         margin-bottom: 0.3rem;
         text-align: center;
         line-height: 1rem;
@@ -40,11 +48,33 @@ header {
   cursor: pointer;
   // background: lightgreen;
   &:hover {
-    background: #ddd;
+    opacity: 0.6;
   }
 }
 
 #header__panel {
+  width: 100%;
+  padding-bottom: 0.3rem;
+  @include border();
+  border-top: none;
+  background: $white;
+  display: none;
+}
+
+#header__btn2 {
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  // background: lightgreen;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+#header__panel2 {
   width: 100%;
   padding-bottom: 0.3rem;
   @include border();

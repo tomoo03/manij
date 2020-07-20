@@ -21,7 +21,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-
+    @team = current_user.teams.find(params[:id])
   end
   
   def edit
@@ -44,6 +44,6 @@ class TeamsController < ApplicationController
     end
 
     def set_team
-      @team = Team.find(params[:id])
+      @team = current_user.teams.find(params[:id])
     end
 end
