@@ -1,31 +1,18 @@
-.goal-wrapper
-  .goal-index-info
-    .goal-index-info__main
-      .goal-index-info__main__statusbar
-        %p チーム一覧
-      .goal-index-info__main__status-label
-        %p チーム名
-      - @teams.each do |team|
-        .goal-index-info__main__status
-          .goal-index-info__main__status__right
-            %p
-              = team.name
-            - team.users.each do |user|
+.form-wrapper
+  .form-wrapper__container
+    .form-wrapper__container__header
+      %p
+        = icon('fa', 'plus-circle')
+        チームを選択
+    .form-wrapper__container__form
+      .form-wrapper__container__form__field
+        - unless @teams.empty?
+          %h2 チームを選択してください
+          - @teams.each do |team|
+            .team_field
               %p
-                = "メンバー #{user.name}"
-            - team.projects.each do |project|
-              %p
-                = "プロジェクト名 #{project.title}"
-              %p
-                = link_to "#{project.title}の詳細", team_project_path(team, project)
-            %p
-              = link_to 'プロジェクトの新規作成', new_team_project_path(team)
-          .goal-index-info__main__status__left
-            .goal-index-info__main__status__left__link
-              = link_to 'Show', '#'
-    .goal-index-info__sidebar
-      .goal-index-info__sidebar__task-list
-        .goal-index-info__sidebar__task-list__label
-          %p task index
-        .goal-index-info__sidebar__task-list__task
-          %p task1
+                = link_to "#{team.name}", team_path(team)
+        - else
+          %h2 チームはありません
+        %p
+        = link_to 'チームを新規作成', new_team_path

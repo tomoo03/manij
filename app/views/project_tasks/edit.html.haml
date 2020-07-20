@@ -2,17 +2,20 @@
   .form-wrapper__container
     .form-wrapper__container__header
       %p
-        = icon('fa', 'plus-circle')
-        タスクの新規作成
-    = form_with model: [@project_phase, @project_task], url: project_phase_project_tasks_path, class: "form-wrapper__container__form", local: true do |f|
+        = icon('fa', 'edit')
+        タスクの編集
+    = form_with model: [@project_phase, @project_task], url: project_phase_project_task_path, class: "form-wrapper__container__form", local: true do |f|
       .form-wrapper__container__form__field
         %span
           = icon('fa', 'pen')
         = f.text_field :title, class: "form-wrapper__container__form__field__input", placeholder: 'タイトル', autofocus: true
+        - if @project_task.task_flg == true
+          = f.hidden_field :task_flg, value: true
+        - else
+          = f.hidden_field :task_flg, value: false
       .userform
         - @users.each do |user|
           = f.radio_button :user_id, user.id
           = f.label :user_id, user.name
-        = f.hidden_field :task_flg, value: false
       .form-wrapper__container__form__field
         = f.submit "Create", class: "form-wrapper__container__form__field__button"

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'static_pages#home'
+  root to: 'goals#index'
   get 'static_pages/about'
   get 'static_pages/help'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :phases, only: :index, defaults: { format: 'json' }
+    resources :phases, only: [:index, :edit, :update], defaults: { format: 'json' }
   end
 
   resources :teams do

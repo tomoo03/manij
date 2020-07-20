@@ -1,20 +1,65 @@
 .form-wrapper
   .form-wrapper__container
-    %h2.form-wrapper__container__heading Sign up
-    = form_with model: @user, url: user_registration_path, class: "form-wrapper__container__new-user-form", local: true do |f|
+    .form-wrapper__container__header
+      %p
+        = icon('fa', 'user-edit')
+    = form_with model: @user, url: user_registration_path, class: "form-wrapper__container__form", local: true do |f|
       = devise_error_messages!
-
-      .form-wrapper__container__new-user-form__field
-        = f.text_field :name, class: "form-wrapper__container__new-user-form__field__input", autofocus: true, placeholder: 'Name', autocomplete: "name" 
-      .form-wrapper__container__new-user-form__field
-        = f.email_field :email, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'Eメール', autocomplete: "email"
-      .form-wrapper__container__new-user-form__field
+      .form-wrapper__container__form__field
+        %span
+          = icon('fa', 'user')
+        = f.text_field :name, class: "form-wrapper__container__form__field__input", placeholder: 'username', autofocus: true, autocomplete: "name"
+      .form-wrapper__container__form__field
+        %span
+          = icon('fa', 'envelope')
+        = f.email_field :email, class: "form-wrapper__container__form__field__input", placeholder: 'email', autocomplete: "email"
+      .form-wrapper__container__form__field
         - if @validatable
-          %em = "パスワードは#{@minimum_password_length}文字以上入力して下さい"
+          %em 
+            = "パスワードは#{@minimum_password_length}文字以上入力して下さい"
           %br/
-        = f.password_field :password, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'パスワード(8文字~32文字)', autocomplete: "new-password"
-      .form-wrapper__container__new-user-form__field
-        = f.password_field :password_confirmation, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'パスワード(確認)', autocomplete: "new-password"
-      .form-wrapper__container__new-user-form__field__actions
-        = f.submit "Sign up", class: "form-wrapper__container__new-user-form__field__actions--button"
+        %span
+          = icon('fa', 'key')
+        = f.password_field :password, class: "form-wrapper__container__form__field__input", placeholder: 'password', autocomplete: "new-password"
+      .form-wrapper__container__form__field
+        %span
+          = icon('fa', 'spell-check')
+        = f.password_field :password_confirmation, class: "form-wrapper__container__form__field__input", placeholder: 'password confirmation'
+      .form-wrapper__container__form__field__remember
+        = f.check_box :remember_me
+        = f.label :remember_me, "ログイン状態を記憶する"
+      .form-wrapper__container__form__field
+        = f.submit "サインアップ", class: "form-wrapper__container__form__field__button"
+    .form-wrapper__container__info
+      %p アカウント作成済みの方
+      = link_to "ログイン", new_user_session_path, class: 'btn form-wrapper__container__info__button'
+    -# = render "devise/shared/links"
+
+
+-# .form-wrapper
+-#   .form-wrapper__container
+-#     %h2.form-wrapper__container__heading 
+-#       %span
+-#         = icon('fa', 'user')
+-#       Sign up
+-#     = form_with model: @user, url: user_registration_path, class: "form-wrapper__container__new-user-form", local: true do |f|
+-#       = devise_error_messages!
+
+-#       .form-wrapper__container__new-user-form__field
+-#         = f.text_field :name, class: "form-wrapper__container__new-user-form__field__input", autofocus: true, placeholder: 'Name', autocomplete: "name" 
+-#       .form-wrapper__container__new-user-form__field
+-#         = f.email_field :email, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'Eメール', autocomplete: "email"
+-#       .form-wrapper__container__new-user-form__field
+-#         - if @validatable
+-#           %em 
+-#             = "パスワードは#{@minimum_password_length}文字以上入力して下さい"
+-#           %br/
+-#         = f.password_field :password, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'パスワード(8文字~32文字)', autocomplete: "new-password"
+-#       .form-wrapper__container__new-user-form__field
+-#         = f.password_field :password_confirmation, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'パスワード(確認)', autocomplete: "new-password"
+-#       .form-wrapper__container__new-user-form__field__checkbox
+-#         = f.check_box :rememer_me
+-#         = f.label :ログインしたままにする
+-#       .form-wrapper__container__new-user-form__field__actions
+-#         = f.submit "Sign up", class: "form-wrapper__container__new-user-form__field__actions--button"
     -# = render "devise/shared/links"

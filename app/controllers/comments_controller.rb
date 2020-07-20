@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comments_params)
     if @comment.save
+      @phase = @comment.phase
       respond_to do |format|
         format.json
       end
@@ -13,6 +14,13 @@ class CommentsController < ApplicationController
       @phases = @goal.phases.order("created_at ASC")
       render template: 'goals/show'
     end
+  end
+
+  def destroy
+    comment = Comment.find(params[:id])
+    goal = comment.phase.goal
+    comment.destroy
+    redirect_to user_goal_path(current_user, goal)
   end
 
   private

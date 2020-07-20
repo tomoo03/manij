@@ -1,0 +1,47 @@
+.goal-wrapper
+  .goal-index__container
+    .goal-index__container__header
+      .goal-index__container__header__title
+        %p
+          = "メンバー数：#{@team.users.count}" 
+      .goal-index__container__header__edit
+        = link_to edit_team_path(@team) do
+          = icon('fa', 'plus-circle')
+          メンバーを追加
+    .goal-index__container__contents
+      .goal-index__container__contents__top
+        .goal-index__container__contents__top__title
+          %p
+            = @team.name
+        .goal-index__container__contents__top__links
+          = link_to edit_team_path(@team) do
+            = icon('fa', 'edit')
+          = link_to team_path(@team), method: :delete do
+            = icon('fa', 'trash')
+      .goal-index__container__contents__status
+        .goal-index__container__contents__status__phase
+          %p
+            %span
+              = icon('fa', 'user')
+            メンバー
+          - @team.users.each do |user|
+            %p.goal-index__container__contents__status__phase__title
+              = "・#{user.name}"
+          .goal-index__container__contents__status__phase__task
+            .goal-index__container__contents__status__phase__task__count
+            .goal-index__container__contents__status__phase__task__show
+      .goal-index__container__contents__projects
+        %p プロジェクト一覧
+        .goal-index__container__contents__projects__index
+          - if @team.projects.present?
+            - @team.projects.each do |project|
+              .goal-index__container__contents__projects__index__link
+                = link_to project.title, team_project_path(@team, project)
+          - else
+            .goal-index__container__contents__projects__index
+              %p プロジェクトはありません
+    .goal-index__container__bottom
+      = link_to new_team_project_path(@team) do
+        %span
+          = icon('fa', 'plus-circle')
+        プロジェクトを新規作成  

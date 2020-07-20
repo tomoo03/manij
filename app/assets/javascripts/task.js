@@ -13,7 +13,7 @@ $(function() {
   }
   
   $('.goal-show-info__contents__accbox__accshow__checkbox__input').on('click', function() {
-    let taskHtml = $(this).parent().next();
+    let taskHtml = $(this).parent().parent().parent().prev().find("p");
     let taskData = $(this).next('#task').data("task-id");
     $.ajax({
       url: '/api/tasks',
@@ -36,8 +36,8 @@ $(function() {
   });
 
   $('.project-show-info__contents__accbox__accshow__checkbox__input').on('click', function() {
-    let taskHtml = $(this).parent().next();
-    let taskData = $(this).next('#project_task').data("projecttask-id");
+    let taskHtml = $(this).parent().parent().parent().prev().find("p");
+    let taskData = $(this).next('#task').data("task-id");
     $.ajax({
       url: '/api/project_tasks',
       type: 'GET',

@@ -1,9 +1,13 @@
 .form-wrapper
   .form-wrapper__container
-    %h2.form-wrapper__container__heading アクションの新規作成
-    = form_with model: [@goal, @mind], url: goal_minds_path(@goal), class: "form-wrapper__container__new-user-form", local: true do |f|
-
-      .form-wrapper__container__new-user-form__field
-        = f.text_field :title, class: "form-wrapper__container__new-user-form__field__input", placeholder: 'アクションの内容', autocomplete: "off"
-      .form-wrapper__container__new-user-form__field__actions
-        = f.submit "Create", class: "form-wrapper__container__new-user-form__field__actions--button"
+    .form-wrapper__container__header
+      %p
+        = icon('fa', 'plus-circle')
+        リマインドの新規作成
+    = form_with model: [@goal, @mind], url: goal_minds_path, class: "form-wrapper__container__form", local: true do |f|
+      .form-wrapper__container__form__field
+        %span
+          = icon('fa', 'pen')
+        = f.text_field :title, class: "form-wrapper__container__form__field__input", placeholder: 'タイトル', autofocus: true
+      .form-wrapper__container__form__field
+        = f.submit "Create", class: "form-wrapper__container__form__field__button"
