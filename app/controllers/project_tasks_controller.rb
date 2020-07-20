@@ -9,10 +9,17 @@ class ProjectTasksController < ApplicationController
   end
 
   def create
-    @project_task = ProjectTask.new(project_task_params)
-    if @project_task.save
-      redirect_to team_project_path(@project_task.project_phase.project.team, @project_task.project_phase.project)
+    if params[:project_task].include?(:user_id)
+      @project_task = ProjectTask.new(project_task_params)
+      if @project_task.save
+        redirect_to team_project_path(@project_task.project_phase.project.team, @project_task.project_phase.project)
+      else
+        render :new
+      end
     else
+      @project_task = ProjectTask.new
+      @project_phase = ProjectPhase.find(params[:project_phase_id])
+      @users = @project_phase.project.team.users
       render :new
     end
   end
@@ -24,11 +31,18 @@ class ProjectTasksController < ApplicationController
   end
 
   def update
-    @project_task = ProjectTask.find(params[:id])
-    @project_phase = @project_task.project_phase
-    if @project_task.update(project_task_params)
-      redirect_to team_project_path(@project_phase.project.team, @project_phase.project)
+    if params[:project_task].include?(:user_id)
+      @project_task = ProjectTask.find(params[:id])
+      @project_phase = @project_task.project_phase
+      if @project_task.update(project_task_params)
+        redirect_to team_project_path(@project_phase.project.team, @project_phase.project)
+      else
+        render :edit
+      end
     else
+      @project_task = ProjectTask.find(params[:id])
+      @project_phase = @project_task.project_phase
+      @users = @project_phase.project.team.users
       render :edit
     end
   end
