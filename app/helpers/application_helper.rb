@@ -1,6 +1,6 @@
 module ApplicationHelper
-  def sort_created_at(tasks)
-    tasks.order("created_at ASC")
+  def sort_created_at(sort_item)
+    sort_item.order("created_at ASC")
   end
 
   def sort_tasks(tasks)

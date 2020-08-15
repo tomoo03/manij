@@ -4,12 +4,12 @@
       %h2.goal-show-info__header__title
         = @project.title
       .goal-show-info__header__remind
-        - unless @project_minds.present?
+        - if @project_minds.present?
           .goal-show-info__header__remind__title
             %p 
               = icon('fa', 'clipboard-list')
               リマインド
-          - @project.project_minds.each do |mind|
+          - @project_minds.each do |mind|
             .goal-show-info__header__remind__index
               %p 
                 = "・#{mind.title}"
@@ -47,12 +47,12 @@
           .goal-show-info__contents__top__tasks
             .goal-show-info__contents__top__tasks__title
               %p タスクのチェック
-            - unless @project_phase.project_tasks.empty?
-              - sort_created_at(@project_phase.project_tasks).each do |task|
+            - if @project_tasks.present?
+              - @project_tasks.each do |task|
                 .goal-show-info__contents__top__tasks__index
                   .goal-show-info__contents__top__tasks__index__timestamp
                     %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
-                      - unless task.task_flg == false
+                      - if task.task_flg == true
                         = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日 担当: #{task.user.name}"
                   .goal-show-info__contents__top__tasks__index__checkbox
                     .goal-show-info__contents__top__tasks__index__checkbox__main
@@ -93,8 +93,8 @@
               .goal-show-info__contents__bottom__accbox__accshow
                 .goal-show-info__contents__bottom__comments
                   .goal-show-info__contents__bottom__comments__content
-                    - unless @project_phase.project_comments.empty?
-                      - sort_created_at(@project_phase.project_comments).each do |comment|
+                    - if @project_comments.present?
+                      - @project_comments.each do |comment|
                         .goal-show-info__contents__bottom__comments__content__comment
                           %p
                             = icon('fa', 'user-edit')
@@ -113,7 +113,7 @@
           %span.blue
             = icon('fa', 'plus-circle')
           フェーズを追加
-    - elsif @project_phases.present? && @project_phase.nil?
+    - elsif @project_phase.blank? && @project_phases.present?
     - else
       .goal-show-info__contents
         %p.empty empty
@@ -121,7 +121,7 @@
           %span.blue
             = icon('fa', 'plus')
           フェーズを追加    
-    - unless @project_phases.empty?
+    - if @project_phases.present?
       - @project_phases.each do |phase|
         .goal-show-info__contents
           .goal-show-info__contents__phase-header
@@ -132,9 +132,9 @@
                     = icon('fa', 'check-circle')
                     フェーズを切り替える
                 .goal-show-info__contents__phase-header__title__nav__link
-                  = link_to edit_project_project_phase_path(@project,phase) do
+                  = link_to edit_project_project_phase_path(@project, phase) do
                     = icon('fa', 'edit')
-                  = link_to project_project_phase_path(@project,phase), method: :delete do
+                  = link_to project_project_phase_path(@project, phase), method: :delete do
                     = icon('fa', 'trash')
               %p.goal-show-info__contents__phase-header__title__phase
                 = phase.title
@@ -144,12 +144,12 @@
             .goal-show-info__contents__top__tasks
               .goal-show-info__contents__top__tasks__title
                 %p タスクのチェック
-              - unless phase.project_tasks.empty?
+              - if phase.project_tasks.present?
                 - sort_created_at(phase.project_tasks).each do |task|
                   .goal-show-info__contents__top__tasks__index
                     .goal-show-info__contents__top__tasks__index__timestamp
                       %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
-                        - unless task.task_flg == false
+                        - if task.task_flg == true
                           = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日"
                     .goal-show-info__contents__top__tasks__index__checkbox
                       .goal-show-info__contents__top__tasks__index__checkbox__main
@@ -190,7 +190,7 @@
                 .goal-show-info__contents__bottom__accbox__accshow
                   .goal-show-info__contents__bottom__comments
                     .goal-show-info__contents__bottom__comments__content
-                      - unless phase.project_comments.empty?
+                      - if phase.project_comments.present?
                         - sort_created_at(phase.project_comments).each do |comment|
                           .goal-show-info__contents__bottom__comments__content__comment
                             %p 

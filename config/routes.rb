@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
-  root to: 'goals#index'
-  get 'static_pages/about'
-  get 'static_pages/help'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  resources :users do
-    resources :goals, only: [:new, :create, :show, :edit, :update, :destroy]
+  root 'goals#index'
+  resources :static_pages do
+    collection do
+      get 'about'
+      get 'help'
+    end
   end
 
-  resources :goals, only: [:index] do
+  resources :users do
+    resources :goals, only: [:create, :show, :edit, :update, :destroy]
+  end
+
+  resources :goals, only: [:new, :index] do
     resources :phases, only: [:index, :new, :create, :edit, :update, :destroy]
     resources :minds
   end
@@ -17,8 +22,10 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-  namespace :api do
-    resources :tasks, only: :index, defaults: { format: 'json' }
+  resources :tasks do
+    collection do
+      get 'change_task_flg'
+    end
   end
 
   namespace :api do
@@ -39,8 +46,10 @@ Rails.application.routes.draw do
     resources :project_comments
   end
 
-  namespace :api do
-    resources :project_tasks, only: [:index, :create], defaults: { format: 'json' }
+  resources :project_tasks do
+    collection do
+      get 'change_task_flg'
+    end
   end
 
   namespace :api do

@@ -4,19 +4,19 @@
       %h2.goal-show-info__header__title
         = @goal.title
       .goal-show-info__header__remind
-        - unless @goal.minds.empty?
+        - if @minds.present?
           .goal-show-info__header__remind__title
             %p 
               = icon('fa', 'clipboard-list')
               リマインド
-          - @goal.minds.each do |mind|
+          - @minds.each do |mind|
             .goal-show-info__header__remind__index
               %p 
                 = "・#{mind.title}"
               .goal-show-info__header__remind__index__link
-                = link_to edit_goal_mind_path(@goal,mind) do
+                = link_to edit_goal_mind_path(@goal, mind) do
                   = icon('fa', 'edit')
-                = link_to goal_mind_path(@goal,mind), method: :delete do
+                = link_to goal_mind_path(@goal, mind), method: :delete do
                   = icon('fa', 'trash')
         - else
           %p リマインドはありません
@@ -25,7 +25,7 @@
           %span.blue
             = icon('fa', 'plus-circle')
           リマインドを追加する
-    - if @phase
+    - if @phase.present?
       .goal-show-info__contents
         .goal-show-info__contents__phase-header
           .goal-show-info__contents__phase-header__title
@@ -47,12 +47,12 @@
           .goal-show-info__contents__top__tasks
             .goal-show-info__contents__top__tasks__title
               %p タスクのチェック
-            - unless @phase.tasks.empty?
-              - sort_created_at(@phase.tasks).each do |task|
+            - if @tasks.present?
+              - @tasks.each do |task|
                 .goal-show-info__contents__top__tasks__index
                   .goal-show-info__contents__top__tasks__index__timestamp
                     %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
-                      - unless task.task_flg == false
+                      - if task.task_flg == true
                         = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日"
                   .goal-show-info__contents__top__tasks__index__checkbox
                     .goal-show-info__contents__top__tasks__index__checkbox__main
@@ -85,12 +85,12 @@
               .goal-show-info__contents__bottom__accbox__accshow
                 .goal-show-info__contents__bottom__comments
                   .goal-show-info__contents__bottom__comments__content
-                    - unless @phase.comments.empty?
-                      - sort_created_at(@phase.comments).each do |comment|
+                    - if @comments.present?
+                      - @comments.each do |comment|
                         .goal-show-info__contents__bottom__comments__content__comment
                           %p 
                             = comment.content
-                          = link_to phase_comment_path(@phase,comment), method: :delete do
+                          = link_to phase_comment_path(@phase, comment), method: :delete do
                             = icon('fa', 'trash')
                     - else
                       .goal-show-info__contents__bottom__comments__content__comment
@@ -104,12 +104,7 @@
           %span.blue
             = icon('fa', 'plus-circle')
           フェーズを追加
-    - elsif @phases && @phase.nil?
-      .goal-show-info__contents
-        = link_to new_goal_phase_path(@goal) do
-          %span.blue
-            = icon('fa', 'plus-circle')
-          フェーズを追加    
+    - elsif @phase.blank? && @phases.present?
     - else
       .goal-show-info__contents
         %p.empty empty
@@ -117,7 +112,7 @@
           %span.blue
             = icon('fa', 'plus-circle')
           フェーズを追加    
-    - unless @phases.empty?
+    - if @phases.present?
       - @phases.each do |phase|
         .goal-show-info__contents
           .goal-show-info__contents__phase-header
@@ -128,9 +123,9 @@
                     = icon('fa', 'check-circle')
                     フェーズを切り替える
                 .goal-show-info__contents__phase-header__title__nav__link
-                  = link_to edit_goal_phase_path(@goal,phase) do
+                  = link_to edit_goal_phase_path(@goal, phase) do
                     = icon('fa', 'edit')
-                  = link_to goal_phase_path(@goal,phase), method: :delete do
+                  = link_to goal_phase_path(@goal, phase), method: :delete do
                     = icon('fa', 'trash')
               %p.goal-show-info__contents__phase-header__title__phase
                 = phase.title
@@ -140,12 +135,12 @@
             .goal-show-info__contents__top__tasks
               .goal-show-info__contents__top__tasks__title
                 %p タスクのチェック
-              - unless phase.tasks.empty?
+              - if phase.tasks.present?
                 - sort_created_at(phase.tasks).each do |task|
                   .goal-show-info__contents__top__tasks__index
                     .goal-show-info__contents__top__tasks__index__timestamp
                       %p.goal-show-info__contents__accbox__accshow__checkbox__timestamp
-                        - unless task.task_flg == false
+                        - if task.task_flg == true
                           = "#{task.updated_at.year}年#{task.updated_at.mon}月#{task.updated_at.day}日"
                     .goal-show-info__contents__top__tasks__index__checkbox
                       .goal-show-info__contents__top__tasks__index__checkbox__main
@@ -178,7 +173,7 @@
                 .goal-show-info__contents__bottom__accbox__accshow
                   .goal-show-info__contents__bottom__comments
                     .goal-show-info__contents__bottom__comments__content
-                      - unless phase.comments.empty?
+                      - if phase.comments.present?
                         - sort_created_at(phase.comments).each do |comment|
                           .goal-show-info__contents__bottom__comments__content__comment
                             %p 

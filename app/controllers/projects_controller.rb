@@ -1,17 +1,19 @@
 class ProjectsController < ApplicationController
   before_action :move_to_sign_in
-  before_action :member_check, except: [:index, :new, :create]
+  before_action :check_member, except: [:index, :new, :create]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   def new
     @project = Project.new
-    @team = current_user.teams.find(params[:team_id])
+    @team = Team.find(params[:team_id])
   end
 
   def create
-    project = Project.new(project_params)
-    if project.save
+    @project = Project.new(project_params)
+    if @project.save
       redirect_to projects_path
     else
+      @team = Team.find(params[:team_id])
       render :new
     end
   end
@@ -22,28 +24,30 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
     @project_phase = ProjectPhase.find_by(title: @project.phase_title)
     @project_phases = @project.project_phases.where.not(title: @project.phase_title).order("created_at ASC")
+    @project_minds = @project.project_minds
+    if @project_phase.present?
+      @project_tasks = sort_created_at(@project_phase.project_tasks)
+      @project_comments = sort_created_at(@project_phase.project_comments)
+    end
   end
 
   def edit
-    @project = Project.find(params[:id])
     @team = @project.team
   end
 
   def update
-    @project = Project.find(params[:id])
     if @project.update(project_params)
       redirect_to projects_path
     else
+      @team = @project.team
       render :edit
     end
   end
 
   def destroy
-    project = Project.find(params[:id])
-    project.destroy
+    @project.destroy
     redirect_to projects_path
   end
 
@@ -52,11 +56,13 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:title, :phase_title).merge(team_id: params[:team_id])
     end
 
-    def member_check
-      team = Team.find(params[:team_id])
-      @user = team.users.find_by(id: current_user.id)
-      if @user.nil?
+    def check_member
+      if Team.find(params[:team_id]).users.includes?(current_user)
         redirect_to root_path
       end
+    end
+
+    def set_project
+      @project = Project.find(params[:id])
     end
 end

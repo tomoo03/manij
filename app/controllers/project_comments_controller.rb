@@ -3,12 +3,9 @@ class ProjectCommentsController < ApplicationController
 
   def create
     @project_comment = ProjectComment.new(project_comment_params.merge(user_id: current_user.id))
-    if @project_comment.save
-      respond_to do |format|
-        format.json
-      end
-    else
-      render template: 'projects/show'
+    @project_comment.save
+    respond_to do |format|
+      format.json
     end
   end
 

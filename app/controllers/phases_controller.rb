@@ -1,6 +1,7 @@
 class PhasesController < ApplicationController
   before_action :move_to_sign_in
   before_action :set_current_user_goal, only: [:new]
+  before_action :set_phase, only: [:edit, :update, :destroy]
 
   def new
     @phase = Phase.new
@@ -10,9 +11,9 @@ class PhasesController < ApplicationController
   def create
     @phase = Phase.new(phase_params)
     if @phase.save
-      if @phase.goal.phase_title.nil?
+      if @phase.goal.phase_title.blank?
         goal = Goal.find(params[:goal_id])
-        goal.update(title: goal.title, phase_title: @phase.title)
+        goal.update(phase_title: @phase.title)
       end
       redirect_to user_goal_path(current_user, @phase.goal)
     else
@@ -21,12 +22,10 @@ class PhasesController < ApplicationController
   end
 
   def edit
-    @phase = Phase.find(params[:id])
     @goal = @phase.goal
   end
 
   def update
-    @phase = Phase.find(params[:id])
     if @phase.update(phase_params)
       redirect_to user_goal_path(@phase.goal.user, @phase.goal)
     else
@@ -36,16 +35,20 @@ class PhasesController < ApplicationController
   end
 
   def destroy
-    @phase = Phase.find(params[:id])
+    goal = @phase.goal
     if @phase.title == @phase.goal.phase_title
       @phase.goal.update_attribute(:phase_title, nil)
     end
     @phase.destroy
-    redirect_to user_goal_path(@phase.goal.user, @phase.goal)
+    redirect_to user_goal_path(goal.user, goal)
   end
 
   private
     def phase_params
       params.require(:phase).permit(:title).merge(goal_id: params[:goal_id])
+    end
+
+    def set_phase
+      @phase = Phase.find(params[:id])
     end
 end

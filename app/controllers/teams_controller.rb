@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :move_to_sign_in
-  before_action :set_team, only: [:show, :edit, :update]
+  before_action :set_team, only: [:show, :edit, :update, :destroy]
 
   def new
     @team = Team.new
@@ -24,22 +24,19 @@ class TeamsController < ApplicationController
   end
   
   def edit
-    @team = Team.find(params[:id])
   end
 
   def update
-    team = Team.find(params[:id])
-    if team.update(team_params)
-      redirect_to team_path(team)
+    if @team.update(team_params)
+      redirect_to team_path(@team)
     else
       render :edit
     end
   end
 
   def destroy
-    team = Team.find(params[:id])
-    team.destroy
-    redirect_to teams_path(team)
+    @team.destroy
+    redirect_to teams_path(@team)
   end
 
   private

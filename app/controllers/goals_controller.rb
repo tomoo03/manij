@@ -16,21 +16,19 @@ class GoalsController < ApplicationController
     end
   end
 
-  def destroy
-    @goal.destroy
-    redirect_to goals_path
-  end
-
   def index
-    @goals = current_user.goals.order("created_at DESC") unless current_user.goals.empty?
+    @goals = current_user.goals.order("created_at DESC")
   end
 
   def show
-    @goal = current_user.goals.find(params[:id])
     @phase = Phase.find_by(title: @goal.phase_title)
     @phases = @goal.phases.where.not(title: @goal.phase_title).order("created_at ASC")
-    # phase_ids = @phases.pluck(:id)
-    # @tasks = Task.where(task_flg: true)
+    @minds = sort_created_at(@goal.minds)
+    if @phase.present?
+      @tasks = sort_created_at(@phase.tasks)
+      @comment = Comment.new
+      @comments = sort_created_at(@phase.comments)
+    end
   end
 
   def edit
@@ -42,6 +40,11 @@ class GoalsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @goal.destroy
+    redirect_to goals_path
   end
 
   private

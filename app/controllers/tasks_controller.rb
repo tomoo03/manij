@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :move_to_sign_in
+  before_action :set_task, only: [:edit, :update, :destroy, :change_task_flg]
 
   def new
     @phase = Phase.find(params[:phase_id])
@@ -17,12 +18,10 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
     @phase = @task.phase
   end
 
   def update
-    @task = Task.find(params[:id])
     if @task.update(task_params)
       redirect_to user_goal_path(current_user, @task.phase.goal)
     else
@@ -31,13 +30,28 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    goal = @task.phase.goal
     @task.destroy
-    redirect_to user_goal_path(current_user, @task.phase.goal)
+    redirect_to user_goal_path(current_user, goal)
+  end
+
+  def change_task_flg
+    if @task.task_flg == true
+      @task.update(task_flg: false)
+    else
+      @task.update(task_flg: true)
+    end
+    respond_to do |format|
+      format.json
+    end
   end
 
   private
     def task_params
       params.require(:task).permit(:title, :task_flg).merge(phase_id: params[:phase_id])
+    end
+
+    def set_task
+      @task = Task.find(params[:id])
     end
 end

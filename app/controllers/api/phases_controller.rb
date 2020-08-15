@@ -2,18 +2,17 @@ class Api::PhasesController < ApplicationController
 
   def index
     @phase = Phase.find(params[:id])
-    goal = @phase.goal
-    goal.update(title: goal.title, phase_title: @phase.title)
+    @phase.goal.update(phase_title: @phase.title)
   end
 
   def edit
     phase = Phase.find(params[:id])
     goal = phase.goal
-    unless goal.user_id == current_user.id
-      redirect_to new_user_session_path
-    else
-      goal.update(title: goal.title, phase_title: phase.title, user_id: current_user.id)
+    if goal.user_id == current_user.id
+      goal.update(phase_title: phase.title)
       redirect_to user_goal_path(current_user, goal)
+    else
+      redirect_to new_user_session_path
     end
   end
 
@@ -21,11 +20,11 @@ class Api::PhasesController < ApplicationController
     project_phase = ProjectPhase.find(params[:id])
     project = project_phase.project
     users = project.team.users
-    if users.where(id: current_user.id).empty?
-      redirect_to new_user_session_path
-    else
-      project.update(title: project.title, phase_title: project_phase.title, team_id: project.team.id)
+    if users.include?(current_user)
+      project.update(phase_title: project_phase.title)
       redirect_to team_project_path(project.team, project)
+    else
+      redirect_to new_user_session_path
     end
   end
 end

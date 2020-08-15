@@ -1,12 +1,12 @@
 .goal-wrapper
   .goal-index__container
-    - unless @goals.nil?
+    - if @goals.present?
       .goal-index__container__header
         .goal-index__container__header__title
           %p
             = "目標の総数：#{@goals.count}"
         .goal-index__container__header__edit
-          = link_to new_user_goal_path(current_user) do
+          = link_to new_goal_path do
             = icon('fa', 'plus-circle')
             目標を追加
       - @goals.each do |goal|  
@@ -21,60 +21,61 @@
               = link_to user_goal_path(current_user, goal), method: :delete do
                 = icon('fa', 'trash')
           .goal-index__container__contents__status
-            - if goal.phase_title
-              - goal.phases.each do |phase|
-                - if phase.title == goal.phase_title
-                  .goal-index__container__contents__status__phase
-                    %p
-                      %span
-                        = icon('fa', 'check-circle')
-                      現在のフェーズ
-                    %p.goal-index__container__contents__status__phase__title
-                      = "・#{goal.phase_title}"
-                    .goal-index__container__contents__status__phase__task
-                      .goal-index__container__contents__status__phase__task__count
-                        %p
-                          = "完了したタスク数 :#{sort_tasks(phase.tasks).count}"
-                        %p
-                          = "残りのタスク数 :#{phase.tasks.count - sort_tasks(phase.tasks).count}"
-                      .goal-index__container__contents__status__phase__task__show
-                        = link_to user_goal_path(current_user, goal) do
+            - if goal.phases.present?
+              - if goal.phase_title.present?
+                - goal.phases.each do |phase|
+                  - if phase.title == goal.phase_title
+                    .goal-index__container__contents__status__phase
+                      %p
+                        %span
+                          = icon('fa', 'check-circle')
+                        現在のフェーズ
+                      %p.goal-index__container__contents__status__phase__title
+                        = "・#{goal.phase_title}"
+                      .goal-index__container__contents__status__phase__task
+                        .goal-index__container__contents__status__phase__task__count
+                          %p
+                            = "完了したタスク数 :#{sort_tasks(phase.tasks).count}"
+                          %p
+                            = "残りのタスク数 :#{phase.tasks.count - sort_tasks(phase.tasks).count}"
+                        .goal-index__container__contents__status__phase__task__show
+                          = link_to user_goal_path(current_user, goal) do
+                            %span
+                              = icon('fa', 'vote-yea')
+                            詳細ページ
+                    .goal-index__container__contents__status__task-unfinished
+                      .goal-show-info__contents__bottom__accbox
+                        %label.goal-show-info__contents__bottom__accbox__label
                           %span
-                            = icon('fa', 'vote-yea')
-                          詳細ページ
-                  .goal-index__container__contents__status__task-unfinished
-                    .goal-show-info__contents__bottom__accbox
-                      %label.goal-show-info__contents__bottom__accbox__label
-                        %span
-                          = icon('fa', 'tasks')
-                        実行中のタスクを確認
-                        = icon('fa', 'angle-down')
-                        %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
-                        .goal-show-info__contents__bottom__accbox__accshow
-                          .goal-index__container__contents__status__task-unfinished__task
-                            - unless phase.tasks.empty?
-                              - phase.tasks.each do |task|
-                                - if task.task_flg == true
-                                  %p
-                                    = icon('fa', 'check-square')
-                                    = task.title
-                                - else
-                                  %p
-                                    = icon('fa', 'caret-right')
-                                    = task.title
-                            - else
-                              %p タスク無し    
-                - else
-                  .goal-index__container__contents__status__phase
-                    %p.goal-index__container__contents__status__phase__info
-                      フェーズが設定されていません
-                  .goal-index__container__contents__status__phase__task
-                    .goal-index__container__contents__status__phase__task__count
-                    .goal-index__container__contents__status__phase__task__show
-                      = link_to user_goal_path(current_user, goal) do
-                        %span
-                          = icon('fa', 'vote-yea')
-                        詳細ページ                    
+                            = icon('fa', 'tasks')
+                          実行中のタスクを確認
+                          = icon('fa', 'angle-down')
+                          %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
+                          .goal-show-info__contents__bottom__accbox__accshow
+                            .goal-index__container__contents__status__task-unfinished__task
+                              - if phase.tasks.present?
+                                - phase.tasks.each do |task|
+                                  - if task.task_flg == true
+                                    %p
+                                      = icon('fa', 'check-square')
+                                      = task.title
+                                  - else
+                                    %p
+                                      = icon('fa', 'caret-right')
+                                      = task.title
+                              - else
+                                %p タスク無し    
+              - else
+                .goal-index__container__contents__status__phase
+                  %p.goal-index__container__contents__status__phase__info
+                    フェーズが設定されていません
+                .goal-index__container__contents__status__phase__task
+                  .goal-index__container__contents__status__phase__task__count
+                  .goal-index__container__contents__status__phase__task__show
+                    = link_to user_goal_path(current_user, goal) do
+                      %span
+                        = icon('fa', 'vote-yea')
+                      詳細ページ                    
             - else
               .goal-index__container__contents__status__phase
                 %p.goal-index__container__contents__status__phase__info

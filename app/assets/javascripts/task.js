@@ -16,7 +16,7 @@ $(function() {
     let taskHtml = $(this).parent().parent().parent().prev().find("p");
     let taskData = $(this).next('#task').data("task-id");
     $.ajax({
-      url: '/api/tasks',
+      url: '/tasks/change_task_flg',
       type: 'GET',
       dataType: 'json',
       data: {id: taskData}
@@ -39,7 +39,7 @@ $(function() {
     let taskHtml = $(this).parent().parent().parent().prev().find("p");
     let taskData = $(this).next('#task').data("task-id");
     $.ajax({
-      url: '/api/project_tasks',
+      url: '/project_tasks/change_task_flg',
       type: 'GET',
       dataType: 'json',
       data: {id: taskData}

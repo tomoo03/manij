@@ -22,7 +22,7 @@
                 = icon('fa', 'trash')
           .goal-index__container__contents__status
             - if project.project_phases.present?
-              - unless project.phase_title.nil?
+              - if project.phase_title.present?
                 - project.project_phases.each do |phase|
                   - if phase.title == project.phase_title
                     .goal-index__container__contents__status__phase
@@ -53,7 +53,7 @@
                           %input.goal-show-info__contents__bottom__accbox__cssacc{:type => "checkbox"}
                           .goal-show-info__contents__bottom__accbox__accshow
                             .goal-index__container__contents__status__task-unfinished__task
-                              - unless phase.project_tasks.empty?
+                              - if phase.project_tasks.present?
                                 - phase.project_tasks.each do |task|
                                   - if task.user_id == current_user.id
                                     - if task.task_flg == true
@@ -93,6 +93,6 @@
       .goal-index__container__header
         .goal-index__container__header__title
           %p
-            = "目標の総数：#{@projects.count}" 
+            = "プロジェクトの総数：0" 
         .goal-index__container__header__edit
           参加しているプロジェクトはありません
