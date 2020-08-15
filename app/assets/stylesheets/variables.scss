@@ -4,10 +4,8 @@ $lightgray: #dbdbdb;
 $lightblue: #4cb5f5;
 $orange: #f47d4a;
 @mixin wrapper() {
-  width: 100vw;
-  height: 100vh;
+  margin-top: 3rem;
   background-color: $overcast;
-  overflow: scroll;
 }
 @mixin box-shadow() {
   box-shadow: 0 2px 10px rgba(0,0,0,0.04);
