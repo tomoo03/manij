@@ -1,34 +1,30 @@
 .team-index-wrapper
   .team-index-wrapper__main-container
-    - if @team.present?
-      - @teams.each do |team|
-        .team-index-wrapper__main-container__team-card
-          .team-index-wrapper__main-container__team-card__heading
-            %p
-              = icon('fa', 'user-friends')
-              = team.name
-          .team-index-wrapper__main-container__team-card__member-field
-            - team.
-            %ul
-              %li
-                =
-    - else
-
-
-    .form-wrapper__container__header
-      %p
-        = icon('fa', 'user-friends')
-        チームを選択
-    .form-wrapper__container__form
-      - unless @teams.empty?
-        .form-wrapper__container__form__teamfield
-          %h2 チームを選択してください
+    .team-index-wrapper__main-container__content
+      - if @teams.present?
         - @teams.each do |team|
-          .form-wrapper__container__form__teamfield
-            %p
-              = link_to "#{team.name}", team_path(team)
+          .team-index-wrapper__main-container__content__team-card
+            .team-index-wrapper__main-container__content__team-card__heading
+              %p
+                = icon('fa', 'user-friends')
+                = team.name
+            .team-index-wrapper__main-container__content__team-card__member-field
+              %ul
+                - team.users.each do |user|
+                  %li
+                    = user.name
+            .team-index-wrapper__main-container__content__team-card__project-field
+              %ul
+                - if team.projects.present?
+                  - team.projects.each do |project|
+                    %li
+                      = project.title
+                - else
+                  %li プロジェクトなし
+            .team-index-wrapper__main-container__content__team-card__edit-field
+              = link_to '詳細ページ', team_path(team)
+              = link_to '編集', edit_team_path(team)
+              = link_to '削除', team_path(team), method: :delete
       - else
-        %h2 チームはありません
-      .form-wrapper__container__form__teamfield
-        %p
-        = link_to 'チームを新規作成', new_team_path
+        %p チームはありません
+  = link_to '新規作成', new_team_path
