@@ -1,5 +1,4 @@
 class GoalsController < ApplicationController
-  include ApplicationHelper
   before_action :move_to_sign_in
   before_action :set_goal, except: [:new, :create, :index]
 
