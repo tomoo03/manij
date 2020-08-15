@@ -1,5 +1,20 @@
-.form-wrapper
-  .form-wrapper__container
+.team-index-wrapper
+  .team-index-wrapper__main-container
+    - if @team.present?
+      - @teams.each do |team|
+        .team-index-wrapper__main-container__team-card
+          .team-index-wrapper__main-container__team-card__heading
+            %p
+              = icon('fa', 'user-friends')
+              = team.name
+          .team-index-wrapper__main-container__team-card__member-field
+            - team.
+            %ul
+              %li
+                =
+    - else
+
+
     .form-wrapper__container__header
       %p
         = icon('fa', 'user-friends')
