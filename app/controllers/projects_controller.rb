@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
     end
 
     def check_member
-      if Team.find(params[:team_id]).users.includes?(current_user)
+      unless Team.find(params[:team_id]).users.exists?(id: current_user.id)
         redirect_to root_path
       end
     end
