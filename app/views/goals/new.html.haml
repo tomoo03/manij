@@ -4,7 +4,7 @@
       %p
         = icon('fa', 'plus-circle')
         目標の新規作成
-    = form_with model: [current_user, @goal], url: user_goals_path, class: "form-wrapper__container__form", local: true do |f|
+    = form_with model: [current_user, @goal], url: user_goals_path(current_user), class: "form-wrapper__container__form", local: true do |f|
       .form-wrapper__container__form__field
         %span
           = icon('fa', 'pen')
