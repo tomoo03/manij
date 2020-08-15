@@ -1,0 +1,7 @@
+.team-index-wrapper {
+  @include wrapper();
+
+  &__main-container {
+    width: 90%;
+  }
+}
