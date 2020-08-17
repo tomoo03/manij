@@ -8,7 +8,7 @@
 [https://github.com/tomoo03/manij](https://github.com/tomoo03/manij)
 - 開発状況
   - 開発環境
-    - Ruby/Ruby on Rails/MySQL/Github/AWS/Visual Studio Code
+    - Ruby/Ruby on Rails/jQuery/Postgresql/Github/Heroku/Visual Studio Code
   - 開発期間
     - 7/10 ~ 7/21(11日間), 8/18 ~ 現在
     - 1日あたりの作業時間 11日間の間は、1日約16 ~ 20
