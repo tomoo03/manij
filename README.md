@@ -3,7 +3,7 @@
 
 ## アプリケーション情報
 ● 接続先情報  
-○ URL [https://tranquil-shore-75098.herokuapp.com/](https://tranquil-shore-75098.herokuapp.com/)
+○ URL [https://tranquil-shore-75098.herokuapp.com/](https://tranquil-shore-75098.herokuapp.com/)  
 ○ Githubリポジトリ  
 [https://github.com/tomoo03/manij](https://github.com/tomoo03/manij)
 # 制作背景
@@ -144,3 +144,13 @@
 - has_many :activated_users, through: :activated_memberships, source: :user
 - has_many :deactivated_memberships, -> { where(activate: false) }, class_name: 'Membership'
 - has_many :deactivated_users, through: :deactivated_memberships, source: :user
+
+## membershipsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|team|references|foreign_key: true|
+|user|references|foreign_key: true|
+|activate|boolean|null: false, default: false|
+### Association
+- belongs_to :team
+- belongs_to :user
