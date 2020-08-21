@@ -11,6 +11,6 @@
         = f.text_field :name, class: "form-wrapper__container__form__field__input", placeholder: 'チーム名', autofocus: true
       .form-wrapper__container__form__field
         .form-wrapper__container__form__field__check-boxes
-          = f.collection_check_boxes :user_ids, User.all, :id, :name
+          = f.collection_check_boxes :user_ids, @team.deactivated_users, :id, :name, {include_hidden: current_user.id}
       .form-wrapper__container__form__field
         = f.submit "Create", class: "form-wrapper__container__form__field__button"

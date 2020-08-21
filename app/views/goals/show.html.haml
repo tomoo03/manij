@@ -1,4 +1,5 @@
 .goal-wrapper
+  = render 'shared/header'
   .goal-show-info
     .goal-show-info__header
       %h2.goal-show-info__header__title
@@ -107,7 +108,6 @@
     - elsif @phase.blank? && @phases.present?
     - else
       .goal-show-info__contents
-        %p.empty empty
         = link_to new_goal_phase_path(@goal) do
           %span.blue
             = icon('fa', 'plus-circle')

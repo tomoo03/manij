@@ -1,40 +1,74 @@
 header {
   width: 100%;
   height: 3rem;
-  box-shadow: 0 0.1rem 0.2rem rgba(160,166,179,0.3);
-  background-color: $white;
+  padding-right: 5rem;
+  padding-left: 8rem;
+  background-color: $overcast;
+  display: flex;
+  justify-content: center;
   position: fixed;
   top: 0;
+
   .header-items {
     width: 100%;
-    max-width: 50rem;
     height: 100%;
-    margin: 0 auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    &__links {
-      display: inline-block;
-      button {
-        &:hover {
-          opacity: 0.6;
+
+    &__left {
+
+      &__links {
+        display: inline-block;
+
+        button {
+          padding: 1.2rem 1rem 1rem;
+          font-size: 1.2rem;
+          &:hover {
+            opacity: 0.8;
+          }
         }
       }
-      &--logo {
-        font-size: 1rem;
-        display: inline-block;
-      }
-      &--box {
-        height: 100%;
-        display: inline-block;
-      }
+    }
+
+    &__right {
+      width: 30%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
       &__menu {
-        width: 100%;
-        margin-bottom: 0.3rem;
-        text-align: center;
-        line-height: 1rem;
-        // background: lightpink;
+        height: 100%;
+        display: flex;
+
+        &__box {
+          height: 100%;
+          display: inline-block;
+
+          &__links {
+            width: 100%;
+            text-align: center;
+            line-height: 1rem;
+          }
+        }
+
+        &__goal-new-link {
+          height: 100%;
+          padding-top: 0.4rem;
+          display: flex;
+          align-items: center;
+
+          a:hover {
+            opacity: 0.8;
+          }
+        }
       }
+    }
+
+    i {
+      padding-bottom: 0.2rem;
+      border-bottom: solid 0.1rem $lightblue;
     }
   }
 }
@@ -46,15 +80,13 @@ header {
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
-  // background: lightgreen;
   &:hover {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 }
 
 #header__panel {
   width: 100%;
-  padding-bottom: 0.3rem;
   @include border();
   border-top: none;
   background: $white;
@@ -68,15 +100,13 @@ header {
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
-  // background: lightgreen;
   &:hover {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 }
 
 #header__panel2 {
   width: 100%;
-  padding-bottom: 0.3rem;
   @include border();
   border-top: none;
   background: $white;

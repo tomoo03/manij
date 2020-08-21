@@ -1,0 +1,38 @@
+%header
+  .header-items
+    .header-items__left
+      .header-items__left__links
+        - if user_signed_in?
+          %button
+            = link_to goals_path do
+              = icon('fa', 'house-user')
+        - else
+          = link_to new_user_session_path do
+            = icon('fa', 'user-lock')
+            Log in
+    .header-items__right
+      .header-items__right__menu
+        .header-items__right__menu__box
+          %button#header__btn
+            = icon('fa', 'user-friends')
+            Team
+          #header__panel
+            .header-items__right__menu__box__links
+              -if user_signed_in?
+                = link_to 'チーム作成', new_team_path(current_user)
+              .header-items__right__menu__box__links
+                = link_to 'チーム一覧', teams_path
+              .header-items__right__links__menu
+                = link_to 'Projects', projects_path
+        .header-items__right__menu__box
+          %button#header__btn2
+            = icon('fa','user-circle')
+            Account
+          #header__panel2
+            .header-items__right__menu__box__links
+              -if user_signed_in?
+                = link_to 'ログアウト', destroy_user_session_path, method: :delete
+      .header-items__right__menu__goal-new-link
+        = link_to new_goal_path do
+          = icon('fa', 'plus')
+          目標の新規作成

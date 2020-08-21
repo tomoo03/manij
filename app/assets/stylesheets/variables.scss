@@ -6,6 +6,10 @@ $orange: #f47d4a;
 @mixin wrapper() {
   margin-top: 3rem;
   background-color: $overcast;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 @mixin box-shadow() {
   box-shadow: 0 2px 10px rgba(0,0,0,0.04);

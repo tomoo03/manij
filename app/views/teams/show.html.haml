@@ -1,13 +1,14 @@
 .goal-wrapper
+  = render 'shared/header'
   .goal-index__container
     .goal-index__container__header
       .goal-index__container__header__title
         %p
-          = "メンバー数：#{@team.users.count}" 
+          = "メンバー数：#{@team.activated_users.count}" 
       .goal-index__container__header__edit
         = link_to edit_team_path(@team) do
           = icon('fa', 'plus-circle')
-          メンバーを追加
+          メンバーを招待
     .goal-index__container__contents
       .goal-index__container__contents__top
         .goal-index__container__contents__top__title
@@ -24,7 +25,7 @@
             %span
               = icon('fa', 'user')
             メンバー
-          - @team.users.each do |user|
+          - @team.activated_users.each do |user|
             %p.goal-index__container__contents__status__phase__title
               = "・#{user.name}"
           .goal-index__container__contents__status__phase__task
