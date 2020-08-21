@@ -34,6 +34,10 @@ Rails.application.routes.draw do
 
   resources :teams do
     resources :projects, only: [:new, :create, :show, :edit, :update, :destroy]
+    member do
+      get 'activate_user'
+      get 'deactivate_user'
+    end
   end
 
   resources :projects, only: [:index] do

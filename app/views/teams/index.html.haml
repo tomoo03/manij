@@ -1,8 +1,16 @@
 .team-index-wrapper
+  = render 'shared/header'
   .team-index-wrapper__main-container
+    .team-index-wrapper__main-container__info
+      - if @deactivate_teams.present?
+        - @deactivate_teams.each do |team|
+          %p
+            = "#{team.admin_user.name}さんから#{team.name}に招待されています"
+            = link_to '承認', activate_user_team_path(team)
+            = link_to '拒否', deactivate_user_team_path(team)
     .team-index-wrapper__main-container__content
-      - if @teams.present?
-        - @teams.each do |team|
+      - if @activate_teams.present?
+        - @activate_teams.each do |team|
           .team-index-wrapper__main-container__content__team-card
             .team-index-wrapper__main-container__content__team-card__heading
               %p
@@ -10,7 +18,7 @@
                 = team.name
             .team-index-wrapper__main-container__content__team-card__member-field
               %ul
-                - team.users.each do |user|
+                - team.activated_users.each do |user|
                   %li
                     = user.name
             .team-index-wrapper__main-container__content__team-card__project-field
@@ -23,8 +31,9 @@
                   %li プロジェクトなし
             .team-index-wrapper__main-container__content__team-card__edit-field
               = link_to '詳細ページ', team_path(team)
-              = link_to '編集', edit_team_path(team)
-              = link_to '削除', team_path(team), method: :delete
+              - if team.admin_user_id == current_user.id
+                = link_to '編集', edit_team_path(team)
+                = link_to '削除', team_path(team), method: :delete
       - else
         %p チームはありません
   = link_to '新規作成', new_team_path

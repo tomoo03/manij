@@ -1,14 +1,10 @@
 .goal-wrapper {
   @include wrapper();
-  display: flex;
-  justify-content: center;
 }
 
 .goal-index__container {
-  width: 90%;
-  max-width: 50rem;
+  width: 100%;
   height: 100%;
-  margin-top: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -16,16 +12,13 @@
 
   &__header {
     width: 100%;
-    height: 3rem;
+    padding-top: 1rem;
     margin-bottom: 5rem;
 
     &__title {
       width: 100%;
-      height: 3rem;
       padding: 0.3rem;
-      background: $white;
-      border-radius: 1rem;
-      @include border;
+      border-radius: 0.1rem;
       border-left: 0.5rem solid $lightblue;
       display: flex;
       align-items: center;
@@ -49,10 +42,154 @@
 
   &__contents {
     width: 100%;
-    margin-bottom: 3rem;
-    padding: 0.3rem;
+    height: 50vh;
+    margin-bottom: 5rem;
     background: $white;
-    @include border();
+    box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.05);
+
+    &__title {
+      width: 100%;
+      height: 2.5rem;
+      padding-left: 1.2rem;
+      background: #008dcb;
+      line-height: 2.5rem;
+      h2 {
+        color: #f0eff0;
+        font-weight: bolder;
+        font-size: 1.2rem;
+      }
+    }
+
+    &__main {
+      height: calc(100% - 2.5rem);
+      display: flex;
+
+      &__phase {
+        width: 80%;
+        padding: 1.2rem;
+        // background: lightblue;
+
+        &__title {
+          width: 100%;
+          // background: lightcoral;
+
+          p {
+            font-size: 1.2rem;
+          }
+        }
+
+        &__tasks {
+          width: 100%;
+          padding-top: 1rem;
+          display: flex;
+
+          p {
+            padding-bottom: 0.5rem;
+            font-size: 1.1rem;
+          }
+
+          ul {
+            padding-top: 1rem;
+            border-top: 1px solid $lightgray;
+
+            li {
+              margin-bottom: 0.2rem;
+              font-size: 0.9rem;
+
+              .caret {
+                color: red;
+              }
+
+              .check-square {
+                color: green;
+              }
+            }
+          }
+
+          &__unfinished-task {
+            width: 60%;
+            padding-right: 1.5rem;
+            // background: lightgoldenrodyellow;
+          }
+
+          &__finished-task {
+            width: 40%;
+            // background: lightgray;
+          }
+        }
+      }
+
+      &__side-bar {
+        width: 20%;
+        // background: lightcyan;
+
+        &__links {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-start;
+
+          &__show {
+            width: 100%;
+            padding-top: 1rem;
+            padding-right: 1rem;
+            text-align: right;
+            a {
+              color: $lightblue;
+              font-size: 0.9rem;
+
+              &:hover {
+                opacity: 0.8;
+              }
+            }
+          }
+
+          &__edit {
+            width: 100%;
+            padding-bottom: 0.3rem;
+            display: flex;
+            justify-content: flex-end;
+
+            button {
+              width: 5.5rem;
+              height: 1.5rem;
+              border-radius: 0.4rem;
+              font-size: 0.8rem;
+              font-weight: bolder;
+              position: relative;
+
+              &:hover {
+                opacity: 0.8;
+              }
+
+              a {
+                display: block;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                line-height: 1.5rem;
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+            }
+            .goal-title-edit {
+              color: $white;
+              background: gray;
+            }
+
+            .goal-title-delete {
+              margin: 0 1rem;
+              color: $white;
+              background: red;
+            }
+          }
+        }
+      }
+
+    }
+
 
     &__top {
       width: 100%;
@@ -84,7 +221,6 @@
         width: 100%;
         padding: 0.3rem;
         margin-bottom: 1rem;
-        @include border();
 
         span {
           color: green;
