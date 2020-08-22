@@ -8,6 +8,10 @@
           %p
             = "目標の総数：#{@goals.count}"
       - @goals.each do |goal|
+      - phase = goal.search_phase(goal)
+      - tasks = phase.tasks
+      - checked_tasks = phase.search_checked_tasks(phase)
+      - unchecked_tasks = phase.search_unchecked_tasks(phase)
         .goal-index__container__contents
           .goal-index__container__contents__title
             %h2
@@ -18,7 +22,7 @@
                 - if goal.phases.present?
                   - if goal.phase_title.present?
                     %p
-                      = goal.search_phase(goal).title
+                      = phase.title
                   - else
                     %p
                       フェーズが設定されていません
@@ -27,11 +31,11 @@
                     フェーズを作成してください
               .goal-index__container__contents__main__phase__tasks
                 .goal-index__container__contents__main__phase__tasks__unfinished-task
-                  - if goal.search_phase(goal).tasks.present?
+                  - if tasks.present?
                     %p
-                      = "残りのタスク：#{goal.search_phase(goal).search_unchecked_tasks(goal.search_phase(goal)).count}"
+                      = "残りのタスク：#{unchecked_tasks.count}"
                     %ul
-                      - goal.search_phase(goal).search_unchecked_tasks(goal.search_phase(goal)).each do |task|
+                      - unchecked_tasks.each do |task|
                         %li
                           = icon('fa', 'caret-right', class: 'caret')
                           = task.title
@@ -39,11 +43,11 @@
                     %p タスク無し
                 .goal-index__container__contents__main__phase__tasks__finished-task
                   .goal-index__container__contents__main__finished-task__index
-                    - if goal.search_phase(goal).tasks.present?
+                    - if tasks.present?
                       %p
-                        = "完了したタスク：#{sort_tasks(goal.search_phase(goal).tasks).count}"
+                        = "完了したタスク：#{sort_tasks(phase.tasks).count}"
                         %ul
-                          - goal.search_phase(goal).search_checked_tasks(goal.search_phase(goal)).each do |task|
+                          - checked_tasks.each do |task|
                             %li
                               = icon('fa', 'check-square', class: 'check-square')
                               = task.title
