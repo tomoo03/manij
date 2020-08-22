@@ -16,7 +16,7 @@ class GoalsController < ApplicationController
   end
 
   def index
-    @goals = current_user.goals.order("created_at DESC")
+    @goals = current_user.goals.includes(:phases).order("created_at DESC")
   end
 
   def show
